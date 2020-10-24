@@ -14,12 +14,24 @@ RSpec.describe Player, type: :model do
       expect(build(:player, team: nil)).not_to be_valid
     end
 
+    it 'is invalid without a valid team' do
+      expect(build(:player, team: 'oak')).not_to be_valid
+    end
+
     it 'is invalid without a opponent' do
       expect(build(:player, opponent: nil)).not_to be_valid
     end
 
+    it 'is invalid without a opponent' do
+      expect(build(:player, opponent: 'oak')).not_to be_valid
+    end
+
     it 'is invalid without a position' do
       expect(build(:player, position: nil)).not_to be_valid
+    end
+
+    it 'is invalid without a position' do
+      expect(build(:player, position: 'gk')).not_to be_valid
     end
 
     it 'is invalid without a price' do

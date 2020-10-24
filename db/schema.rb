@@ -10,10 +10,53 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_24_194328) do
+ActiveRecord::Schema.define(version: 2020_10_24_204037) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_enum :nfl_team, [
+    "ari",
+    "atl",
+    "bal",
+    "buf",
+    "car",
+    "chi",
+    "cin",
+    "cle",
+    "dal",
+    "den",
+    "det",
+    "gb",
+    "hou",
+    "ind",
+    "jax",
+    "kc",
+    "lac",
+    "lar",
+    "lv",
+    "mia",
+    "min",
+    "ne",
+    "no",
+    "nyg",
+    "nyj",
+    "phi",
+    "pit",
+    "sea",
+    "sf",
+    "tb",
+    "ten",
+    "was",
+  ], force: :cascade
+
+  create_enum :player_position, [
+    "qb",
+    "rb",
+    "wr",
+    "te",
+    "dst",
+  ], force: :cascade
 
   create_table "gameweeks", force: :cascade do |t|
     t.integer "season", null: false
@@ -25,12 +68,12 @@ ActiveRecord::Schema.define(version: 2020_10_24_194328) do
   create_table "players", force: :cascade do |t|
     t.bigint "gameweek_id", null: false
     t.string "name", null: false
-    t.string "team", null: false
-    t.string "opponent", null: false
     t.integer "price", null: false
-    t.string "position", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.enum "team", enum_name: "nfl_team"
+    t.enum "opponent", enum_name: "nfl_team"
+    t.enum "position", enum_name: "player_position"
     t.index ["gameweek_id"], name: "index_players_on_gameweek_id"
   end
 

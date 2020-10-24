@@ -2,9 +2,9 @@ FactoryBot.define do
   factory :player do
     gameweek
     name { 'Davante Adams' }
-    team  { 'GB' }
-    opponent { 'HOU' }
+    team  { 'gb' }
+    opponent { 'hou' }
     price { 8_000 }
-    position { 'WR' }
+    position { 'wr' }
   end
 end
