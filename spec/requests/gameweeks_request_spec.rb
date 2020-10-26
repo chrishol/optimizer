@@ -1,12 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe "Players", type: :request do
+RSpec.describe "Gameweeks", type: :request do
 
   describe "GET /index" do
-    let(:gameweek) { create(:gameweek) }
-
     it "returns http success" do
-      get "/gameweeks/#{gameweek.id}/players"
+      get "/gameweeks"
       expect(response).to have_http_status(:success)
     end
   end

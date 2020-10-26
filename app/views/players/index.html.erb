@@ -1,5 +1,8 @@
+<%= render partial: 'navigation/gameweek_nav',
+           locals: { navigable_gameweeks: @navigable_gameweeks } %>
+
 <h1 class='my-8 text-2xl text-center font-black'>
-  Players
+  Week <%= @gameweek.week_number %> - Players
 </h1>
 
 <table class='table-auto mx-auto border-collapse border-2 border-gray-800'>
