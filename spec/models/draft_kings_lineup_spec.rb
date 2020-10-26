@@ -83,6 +83,18 @@ RSpec.describe DraftKingsLineup do
           expect(lineup.valid?).to eq false
         end
       end
+
+      context 'when lineup has duplicate players' do
+        let(:rb3) { build(:player, position: 'rb', price: average_price) }
+
+        let(:players) do
+          [qb, rb1, rb2, rb3, rb3, wr1, wr2, wr3, te, dst]
+        end
+
+        it 'is invalid' do
+          expect(lineup.valid?).to eq false
+        end
+      end
     end
 
     context 'when over the salary cap' do

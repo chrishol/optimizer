@@ -1,22 +1,41 @@
 class DraftKingsLineupFinder
-  DEFAULT_MAX_PRICE = 50_000
+  # TODO:
+  # Create error class for too large a data set
+  # Expand to 2x RBs
+  # Expand to 3x WRs
+  # Expand to 1x TEs
+  # Expand to 1x DSTs
+  # Expand to 1x FLEX
+  # Allow lock buttons on players
+
+  DEFAULT_MAX_PRICE = DraftKingsLineup::SALARY_CAP
 
   def initialize(min_price:, max_price: DEFAULT_MAX_PRICE)
     @min_price = min_price
     @max_price = max_price
   end
 
-  def valid_lineups(price_position_data)
+  def valid_lineups(players)
     lineup_solutions = []
-    @price_position_data = price_position_data
+    @players = players
 
-    quarterbacks.each do |qb_data|
-      running_backs.each do |rb_data|
-        total_price = qb_data[:price].to_i + rb_data[:price].to_i
-        if total_price >= min_price && total_price <= max_price
-          lineup_solutions << [
-            qb_data[:key], rb_data[:key]
-          ]
+    players.select(&:qb?).each do |qb|
+      players.select(&:rb?).combination(2).each do |rbs|
+        players.select(&:wr?).combination(3).each do |wrs|
+          players.select(&:te?).each do |te|
+            players.select(&:flex?).each do |flex|
+              next if [te].concat(rbs).concat(wrs).include? flex
+
+              players.select(&:dst?).each do |dst|
+                current_lineup = DraftKingsLineup.new(
+                  [qb].concat(rbs).concat(wrs).concat([te, flex, dst])
+                )
+                if current_lineup.valid? && !lineup_solutions.include?(current_lineup)
+                  lineup_solutions << current_lineup
+                end
+              end
+            end
+          end
         end
       end
     end
@@ -26,17 +45,5 @@ class DraftKingsLineupFinder
 
   private
 
-  attr_reader :min_price, :max_price, :price_position_data
-
-  def quarterbacks
-    price_position_data.select do |data|
-      data[:position] == "QB"
-    end
-  end
-
-  def running_backs
-    price_position_data.select do |data|
-      data[:position] == "RB"
-    end
-  end
+  attr_reader :min_price, :max_price
 end

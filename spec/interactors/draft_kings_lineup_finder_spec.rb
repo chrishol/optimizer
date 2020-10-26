@@ -19,23 +19,30 @@ describe DraftKingsLineupFinder do
     subject(:valid_lineups) do
       described_class.new(
         min_price: 50_000, max_price: 50_000
-      ).valid_lineups(price_position_data)
+      ).valid_lineups(players)
     end
 
-    let(:price_position_data) do
+    let(:players) do
       [
-        { key: 1, position: "QB", price: "25_000" },
-        { key: 2, position: "QB", price: "35_000" },
-        { key: 3, position: "RB", price: "10_000" },
-        { key: 4, position: "RB", price: "25_000" },
-        { key: 5, position: "RB", price: "35_000" }
+        create(:player, position: "qb", price: "5_000"),
+        create(:player, position: "qb", price: "5_000"),
+        create(:player, position: "rb", price: "5_000"),
+        create(:player, position: "rb", price: "5_000"),
+        create(:player, position: "rb", price: "5_000"),
+        create(:player, position: "wr", price: "5_000"),
+        create(:player, position: "wr", price: "5_000"),
+        create(:player, position: "wr", price: "5_000"),
+        create(:player, position: "te", price: "10_000"),
+        create(:player, position: "dst", price: "5_000")
       ]
     end
 
     it "can solve an easy problem" do
-      expect(valid_lineups).to match_array([
-        [1, 4]
-      ])
+      expect(valid_lineups.count).to eq(2)
+    end
+
+    it "returns an array of lineup classes" do
+      expect(valid_lineups).to all be_a(DraftKingsLineup)
     end
   end
 end

@@ -8,6 +8,8 @@ class DraftKingsLineup
   DST_COUNT = 1
   TOTAL_PLAYER_COUNT = QB_COUNT + RB_COUNT + WR_COUNT + TE_COUNT + FLEX_COUNT + DST_COUNT
 
+  attr_reader :players
+
   def initialize(players)
     @players = players
   end
@@ -16,11 +18,15 @@ class DraftKingsLineup
     valid_positions? && under_salary_cap?
   end
 
+  def ==(other)
+    Set.new(players) == Set.new(other.players)
+  end
+
   private
 
-  attr_accessor :players
+  attr_writer :players
 
-  def valid_positions?
+  def valid_positions? # TODO - Refactor to use FLEX_POSITIOS
     return false unless players.count == TOTAL_PLAYER_COUNT
 
     return false unless players.count { |p| p.position == 'qb' } == QB_COUNT
