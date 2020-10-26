@@ -7,7 +7,7 @@ class Player < ApplicationRecord
 
   belongs_to :gameweek
 
-  validates_presence_of :name, :team, :opponent, :price, :position
+  validates_presence_of :dk_id, :name, :team, :opponent, :price, :position
   validates_inclusion_of :team, :opponent, in: NFL_TEAMS
   validates_inclusion_of :position, in: PLAYER_POSITIONS
 end

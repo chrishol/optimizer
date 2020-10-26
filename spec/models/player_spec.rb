@@ -6,6 +6,10 @@ RSpec.describe Player, type: :model do
   end
 
   describe 'validations' do
+    it 'is invalid without a DraftKings ID' do
+      expect(build(:player, dk_id: nil)).not_to be_valid
+    end
+
     it 'is invalid without a name' do
       expect(build(:player, name: nil)).not_to be_valid
     end

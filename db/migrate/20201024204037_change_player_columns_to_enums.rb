@@ -12,9 +12,9 @@ class ChangePlayerColumnsToEnums < ActiveRecord::Migration[6.0]
     remove_column :players, :opponent
     remove_column :players, :position
 
-    add_column :players, :team, :nfl_team
-    add_column :players, :opponent, :nfl_team
-    add_column :players, :position, :player_position
+    add_column :players, :team, :nfl_team, null: false
+    add_column :players, :opponent, :nfl_team, null: false
+    add_column :players, :position, :player_position, null: false
   end
 
   def down
@@ -25,8 +25,8 @@ class ChangePlayerColumnsToEnums < ActiveRecord::Migration[6.0]
     drop_enum :nfl_team
     drop_enum :player_position
 
-    add_column :players, :team, :string
-    add_column :players, :opponent, :string
-    add_column :players, :position, :string
+    add_column :players, :team, :string, null: false
+    add_column :players, :opponent, :string, null: false
+    add_column :players, :position, :string, null: false
   end
 end
