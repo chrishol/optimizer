@@ -10,7 +10,7 @@ class DraftKingsLineupFinder
 
   DEFAULT_MAX_PRICE = DraftKingsLineup::SALARY_CAP
 
-  def initialize(min_price:, max_price: DEFAULT_MAX_PRICE)
+  def initialize(min_price: DEFAULT_MAX_PRICE, max_price: DEFAULT_MAX_PRICE)
     @min_price = min_price
     @max_price = max_price
   end

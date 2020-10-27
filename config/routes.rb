@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  get 'gameweeks/index'
-  resources :gameweeks, only: :index do
-    resources :players, only: :index
+  resources :gameweeks, only: %w(index) do
+    resources :players, only: %w(index)
   end
+
+  resources :player_pool_entries, only: %w(create destroy)
 end

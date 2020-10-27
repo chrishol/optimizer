@@ -23,7 +23,8 @@
       <td class='border border-gray-500 px-4 py-2'><%= player.team.upcase %></td>
       <td class='border border-gray-500 px-4 py-2'><%= player.price %></td>
       <td class='border border-gray-500 px-4 py-2 text-center'>
-        <input type='checkbox' class='form-checkbox h-6 w-6 text-green-800'>
+        <%= render partial: 'player_pool_actions',
+                   locals: { entry: player_pool_entry_for(@player_pool, player) } %>
       </td>
     </tr>
     <% end %>

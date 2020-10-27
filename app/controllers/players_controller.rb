@@ -1,5 +1,5 @@
 class PlayersController < ApplicationController
-  before_action :load_gameweek, :load_navigable_gameweeks
+  before_action :load_gameweek, :load_navigable_gameweeks, :load_player_pool
 
   def index
     @players = gameweek.players.order('position ASC, price DESC')
@@ -11,6 +11,10 @@ class PlayersController < ApplicationController
 
   def load_gameweek
     @gameweek = Gameweek.find(params[:gameweek_id])
+  end
+
+  def load_player_pool
+    @player_pool = PlayerPool.first_or_create(gameweek: gameweek)
   end
 
   def load_navigable_gameweeks

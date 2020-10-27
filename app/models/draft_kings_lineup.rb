@@ -18,6 +18,10 @@ class DraftKingsLineup
     valid_positions? && under_salary_cap?
   end
 
+  # TODO - Add some stacking logic
+  def is_stack?
+  end
+
   def ==(other)
     Set.new(players) == Set.new(other.players)
   end

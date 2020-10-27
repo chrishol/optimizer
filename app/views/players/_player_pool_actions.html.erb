@@ -1,0 +1,7 @@
+<div class="player-pool-entry-form-<%= entry.player_id %>">
+  <% if entry.persisted? %>
+    <%= render partial: 'remove_from_pool', locals: { entry: entry } %>
+  <% else %>
+    <%= render partial: 'add_to_pool', locals: { entry: entry } %>
+  <% end %>
+</div>
