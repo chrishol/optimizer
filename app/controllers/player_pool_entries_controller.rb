@@ -7,7 +7,14 @@ class PlayerPoolEntriesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_back(fallback_location: gameweeks_path) }
-      format.js
+      format.js {
+        PlayerPoolChannel.broadcast_to(
+          @entry.player_pool,
+          player_id: @entry.player_id,
+          entry: render_created_entry(@entry)
+        )
+        head :ok
+      }
     end
   end
 
@@ -17,7 +24,14 @@ class PlayerPoolEntriesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_back(fallback_location: gameweeks_path) }
-      format.js
+      format.js {
+        PlayerPoolChannel.broadcast_to(
+          @entry.player_pool,
+          player_id: @entry.player_id,
+          entry: render_deleted_entry(@entry)
+        )
+        head :ok
+      }
     end
   end
 
@@ -25,5 +39,13 @@ class PlayerPoolEntriesController < ApplicationController
 
   def player_pool_entry_params
     params.require(:player_pool_entry).permit(:player_pool_id, :player_id)
+  end
+
+  def render_created_entry(entry)
+    render(partial: 'players/remove_from_pool', locals: { entry: entry })
+  end
+
+  def render_deleted_entry(entry)
+    render(partial: 'players/add_to_pool', locals: { entry: entry })
   end
 end

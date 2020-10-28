@@ -14,7 +14,7 @@ class PlayersController < ApplicationController
   end
 
   def load_player_pool
-    @player_pool = PlayerPool.first_or_create(gameweek: gameweek)
+    @player_pool = PlayerPool.where(gameweek: gameweek).first_or_create
   end
 
   def load_navigable_gameweeks

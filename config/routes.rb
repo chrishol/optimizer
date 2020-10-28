@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount ActionCable.server, at: '/cable'
+
   resources :gameweeks, only: %w(index) do
     resources :players, only: %w(index)
   end
