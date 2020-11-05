@@ -15,9 +15,10 @@ class DraftKingsLineupFinder
     @max_price = max_price
   end
 
-  def valid_lineups(players)
+  def valid_lineups(player_pool, broadcast: true)
     lineup_solutions = []
-    @players = players
+    @players = player_pool.players.sort_by(&:price).reverse!
+    @broadcaster = LineupBroadcaster.new(player_pool)
 
     players.select(&:qb?).each do |qb|
       players.select(&:rb?).combination(2).each do |rbs|
@@ -30,9 +31,14 @@ class DraftKingsLineupFinder
                 current_lineup = DraftKingsLineup.new(
                   [qb].concat(rbs).concat(wrs).concat([te, flex, dst])
                 )
-                if current_lineup.valid? && !lineup_solutions.include?(current_lineup)
-                  lineup_solutions << current_lineup
-                end
+                next unless current_lineup.valid? &&
+                            !lineup_solutions.include?(current_lineup) &&
+                            min_price <= current_lineup.total_price &&
+                            current_lineup.total_price <= max_price
+
+                lineup_solutions << current_lineup
+
+                broadcaster.broadcast(current_lineup) if broadcast
               end
             end
           end
@@ -45,5 +51,5 @@ class DraftKingsLineupFinder
 
   private
 
-  attr_reader :min_price, :max_price
+  attr_reader :min_price, :max_price, :players, :broadcaster
 end

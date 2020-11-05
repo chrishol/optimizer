@@ -15,9 +15,12 @@ $(document).on('turbolinks:load', function () {
       },
 
       received(data) {
-        console.log(data);
-        var selector = 'div[data-player-id="player-pool-entry-form-'.concat(data.player_id).concat('"');
-        $(selector).html(data.entry);
+        if (data.player_id) {
+          var selector = 'div[data-player-id="player-pool-entry-form-'.concat(data.player_id).concat('"');
+          $(selector).html(data.entry);
+        } else if (data.lineup) {
+          $('#lineups').append(data.lineup);
+        }
       }
     })
   }

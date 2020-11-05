@@ -1,35 +1,67 @@
-<%= render partial: 'navigation/gameweek_nav',
-           locals: { navigable_gameweeks: @navigable_gameweeks } %>
+<div class='flex flex-col h-screen'>
+  <%= render partial: 'navigation/gameweek_nav',
+             locals: { navigable_gameweeks: @navigable_gameweeks } %>
 
-<h1 class='my-8 text-2xl text-center font-black'>
-  Week <%= @gameweek.week_number %> - Players
-</h1>
+  <div class='flex-1 flex overflow-y-hidden'>
+    <div class='w-1/2 flex-none overflow-y-auto'>
+      <h1 class='my-8 text-2xl text-center font-black'>
+        Week <%= @gameweek.week_number %> - Players
+      </h1>
 
-<table class='table-auto mx-auto border-collapse border-2 border-gray-800'>
-  <thead class='bg-gray-500'>
-    <tr>
-      <th class='border border-gray-600 px-4 py-2'>Position</th>
-      <th class='border border-gray-600 px-4 py-2'>Player</th>
-      <th class='border border-gray-600 px-4 py-2'>Team</th>
-      <th class='border border-gray-600 px-4 py-2'>Price</th>
-      <th class='border border-gray-600 px-4 py-2'>Select</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @players.each do |player| %>
-    <tr>
-      <td class='border border-gray-500 px-4 py-2'><%= player.position.upcase %></td>
-      <td class='border border-gray-500 px-4 py-2'><%= player.name %></td>
-      <td class='border border-gray-500 px-4 py-2'><%= player.team.upcase %></td>
-      <td class='border border-gray-500 px-4 py-2'><%= player.price %></td>
-      <td class='border border-gray-500 px-4 py-2 text-center'>
-        <%= render partial: 'player_pool_actions',
-                   locals: { entry: player_pool_entry_for(@player_pool, player) } %>
-      </td>
-    </tr>
+      <div class="inline-flex w-full justify-center mb-4">
+        <% Player::PLAYER_POSITIONS.each do |position| %>
+          <%= link_to position.upcase,
+                      params.permit(:position).merge(position: position),
+                      class:"bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" %>
+        <% end %>
+      </div>
+
+      <table class='table-auto mx-auto border-collapse border-2 border-gray-800'>
+        <thead class='bg-gray-500'>
+          <tr>
+            <th class='border border-gray-600 px-4 py-2'>Position</th>
+            <th class='border border-gray-600 px-4 py-2'>Player</th>
+            <th class='border border-gray-600 px-4 py-2'>Team</th>
+            <th class='border border-gray-600 px-4 py-2'>Price</th>
+            <th class='border border-gray-600 px-4 py-2'>Select</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @players.each do |player| %>
+          <tr>
+            <td class='border border-gray-500 px-4 py-2'><%= player.position.upcase %></td>
+            <td class='border border-gray-500 px-4 py-2'><%= player.name %></td>
+            <td class='border border-gray-500 px-4 py-2'><%= player.team.upcase %></td>
+            <td class='border border-gray-500 px-4 py-2'><%= player.price %></td>
+            <td class='border border-gray-500 px-4 py-2 text-center'>
+              <%= render partial: 'player_pool_actions',
+                         locals: { entry: player_pool_entry_for(@player_pool, player) } %>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class='bg-red-100 w-1/2 overflow-y-auto'>
+      <div id='lineups' class='flex flex-row flex-wrap justify-center'>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-green-200 flex justify-end p-4">
+    <a href='#' class="cursor-pointer hover:bg-green-100 py-2 px-4 mx-1 rounded-full
+                       bg-green-300 text-green-900 text-center align-middle font-semibold">
+     Clear
+    </a>
+    <%= form_with url: lineup_generations_path do |f| %>
+      <%= hidden_field_tag :player_pool_id, @player_pool.id %>
+      <%= f.submit "Find lineups",
+                   class: "cursor-pointer hover:bg-green-400 py-2 px-4 mx-1 rounded-full
+                           bg-green-300 text-green-900 text-center align-middle font-semibold" %>
     <% end %>
-  </tbody>
-</table>
+  </div>
+</div>
 
 <div id='ac-player-pool' data-player-pool-id='<%= @player_pool.id %>' class='hidden'>
 </div>

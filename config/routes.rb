@@ -6,4 +6,6 @@ Rails.application.routes.draw do
   end
 
   resources :player_pool_entries, only: %w(create destroy)
+
+  resources :lineup_generations, only: %w(create)
 end

@@ -18,6 +18,10 @@ class DraftKingsLineup
     valid_positions? && under_salary_cap?
   end
 
+  def total_price
+    players.sum(&:price)
+  end
+
   # TODO - Add some stacking logic
   def is_stack?
   end
