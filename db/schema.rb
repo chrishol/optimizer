@@ -96,9 +96,9 @@ ActiveRecord::Schema.define(version: 2020_11_05_051625) do
 
   create_table "scheduled_games", force: :cascade do |t|
     t.bigint "gameweek_id", null: false
-    t.time "start_time", null: false
-    t.string "home_team", null: false
-    t.string "road_team", null: false
+    t.datetime "start_time", null: false
+    t.enum "home_team", null: false, enum_name: "nfl_team"
+    t.enum "road_team", null: false, enum_name: "nfl_team"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["gameweek_id"], name: "index_scheduled_games_on_gameweek_id"

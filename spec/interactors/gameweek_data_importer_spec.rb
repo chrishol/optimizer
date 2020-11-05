@@ -20,18 +20,35 @@ describe GameweekDataImporter do
     end
 
     describe 'imported fields' do
-      subject(:player) { Player.find_by_dk_id(15642242) }
+      describe 'first row' do
+        subject(:player) { Player.find_by_dk_id(15642242) }
 
-      before do
-        described_class.new(gameweek).import_csv(tmp_filepath)
+        before do
+          described_class.new(gameweek).import_csv(tmp_filepath)
+        end
+
+        it { expect(player.name).to eq 'Christian McCaffrey' }
+        it { expect(player.position).to eq 'rb' }
+        it { expect(player.team).to eq 'car' }
+        it { expect(player.opponent).to eq 'car' } # TODO - Fix opponents as DK doesn't provide them
+        it { expect(player.price).to eq 8_300 }
+        it { expect(player.gameweek).to eq gameweek }
       end
 
-      it { expect(player.name).to eq 'Christian McCaffrey' }
-      it { expect(player.position).to eq 'rb' }
-      it { expect(player.team).to eq 'car' }
-      it { expect(player.opponent).to eq 'car' } # TODO - Fix opponents as DK doesn't provide them
-      it { expect(player.price).to eq 8_300 }
-      it { expect(player.gameweek).to eq gameweek }
+      describe 'second row' do
+        subject(:player) { Player.find_by_dk_id(15642450) }
+
+        before do
+          described_class.new(gameweek).import_csv(tmp_filepath)
+        end
+
+        it { expect(player.name).to eq 'DeAndre Hopkins' }
+        it { expect(player.position).to eq 'wr' }
+        it { expect(player.team).to eq 'ari' }
+        it { expect(player.opponent).to eq 'ari' } # TODO - Fix opponents as DK doesn't provide them
+        it { expect(player.price).to eq 8_200 }
+        it { expect(player.gameweek).to eq gameweek }
+      end
     end
   end
 end
