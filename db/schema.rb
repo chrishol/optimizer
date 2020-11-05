@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_27_015028) do
+ActiveRecord::Schema.define(version: 2020_11_05_051625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,8 +94,19 @@ ActiveRecord::Schema.define(version: 2020_10_27_015028) do
     t.index ["gameweek_id"], name: "index_players_on_gameweek_id"
   end
 
+  create_table "scheduled_games", force: :cascade do |t|
+    t.bigint "gameweek_id", null: false
+    t.time "start_time", null: false
+    t.string "home_team", null: false
+    t.string "road_team", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["gameweek_id"], name: "index_scheduled_games_on_gameweek_id"
+  end
+
   add_foreign_key "player_pool_entries", "player_pools"
   add_foreign_key "player_pool_entries", "players"
   add_foreign_key "player_pools", "gameweeks"
   add_foreign_key "players", "gameweeks"
+  add_foreign_key "scheduled_games", "gameweeks"
 end

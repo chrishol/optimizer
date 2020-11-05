@@ -1,8 +1,4 @@
 class Player < ApplicationRecord
-  NFL_TEAMS = %w(
-    ari atl bal buf car chi cin cle dal den det gb hou ind jax kc lac lar
-    lv mia min ne no nyg nyj phi pit sea sf tb ten was
-  )
   PLAYER_POSITIONS = %w(qb rb wr te dst)
   FLEX_POSITIONS = %w(rb wr te)
 
@@ -10,7 +6,7 @@ class Player < ApplicationRecord
   has_many :player_pool_entries
 
   validates_presence_of :dk_id, :name, :team, :opponent, :price, :position
-  validates_inclusion_of :team, :opponent, in: NFL_TEAMS
+  validates_inclusion_of :team, :opponent, in: ScheduledGame::NFL_TEAMS
   validates_inclusion_of :position, in: PLAYER_POSITIONS
 
   def qb?
