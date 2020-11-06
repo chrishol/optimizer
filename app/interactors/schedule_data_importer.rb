@@ -1,10 +1,9 @@
 require 'csv'
 
-# Example usage
-# ----------------
-# path = './tmp/DKSalaries.csv'
-# gameweek = Gameweek.find_by(season: 2020, week_number: 7)
-# importer = GameweekDataImporter.new(gameweek)
+# Example usage (data from Pro Football Reference)
+# ---------------------------------------------------
+# path = './tmp/schedule.csv'
+# importer = ScheduleDataImporter.new(2020)
 # importer.import_csv(path)
 
 class ScheduleDataImporter
@@ -49,7 +48,10 @@ class ScheduleDataImporter
 
   def import_csv(csv_path)
     CSV.table(csv_path).each do |row|
-      gameweek = Gameweek.find_by(season: season_year, week_number: row[:week])
+      gameweek = Gameweek.where(
+        season: season_year,
+        week_number: row[:week]
+      ).first_or_create!
 
       if row[:homeroad] == '@'
         home_team = row[:losertie]

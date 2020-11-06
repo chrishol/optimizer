@@ -21,6 +21,30 @@ describe ScheduleDataImporter do
       }.to change(ScheduledGame, :count).from(0).to(2)
     end
 
+    context "when a gameweek does not exist" do
+      before do
+        File.open(tmp_filepath, 'a') do |f|
+          f << "12,Sun,November 29,1:00PM,New York Giants,@,Cincinnati Bengals,preview,,,,,,\n"
+        end
+      end
+
+      it 'creates the relevant gameweek' do
+        expect {
+          described_class.new(season_year).import_csv(tmp_filepath)
+        }.to change(Gameweek, :count).from(2).to(3)
+      end
+
+      describe 'created gameweek' do
+        subject(:gameweek) { Gameweek.find_by(week_number: 12) }
+
+        before do
+          described_class.new(season_year).import_csv(tmp_filepath)
+        end
+
+        it { expect(gameweek.season).to eq season_year }
+      end
+    end
+
     describe 'imported fields' do
       describe 'first row' do
         subject(:game) { ScheduledGame.find_by_gameweek_id(gameweek6.id) }
