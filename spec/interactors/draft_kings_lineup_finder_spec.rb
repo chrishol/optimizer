@@ -19,8 +19,10 @@ describe DraftKingsLineupFinder do
     subject(:valid_lineups) do
       described_class.new(
         min_price: 50_000, max_price: 50_000
-      ).valid_lineups(players)
+      ).valid_lineups(player_pool)
     end
+
+    let(:player_pool) { create(:player_pool) }
 
     let(:players) do
       [
@@ -35,6 +37,12 @@ describe DraftKingsLineupFinder do
         create(:player, position: "te", price: "10_000"),
         create(:player, position: "dst", price: "5_000")
       ]
+    end
+
+    before do
+      players.each do |player|
+        create(:player_pool_entry, player_pool: player_pool, player: player)
+      end
     end
 
     it "can solve an easy problem" do
