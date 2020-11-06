@@ -30,6 +30,14 @@ RSpec.describe Player, type: :model do
       expect(build(:player, opponent: 'oak')).not_to be_valid
     end
 
+    it 'is invalid without a game venue' do
+      expect(build(:player, game_venue: nil)).not_to be_valid
+    end
+
+    it 'is invalid without a game venue' do
+      expect(build(:player, game_venue: 'mars')).not_to be_valid
+    end
+
     it 'is invalid without a position' do
       expect(build(:player, position: nil)).not_to be_valid
     end

@@ -22,6 +22,7 @@ class GameweekDataImporter
         player.price = row[:salary]
         player.team = team
         player.opponent = opponent_finder.opponent(team) || team
+        player.game_venue = opponent_finder.game_venue(team) || :neutral
         player.position = row[:position].downcase
       end
     end

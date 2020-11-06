@@ -21,11 +21,11 @@ describe GameweekDataImporter do
 
     describe 'imported fields' do
       let(:opponent_finder) { instance_double(OpponentFinder) }
-      let(:opponent) { 'pit' }
 
       before do
         allow(OpponentFinder).to receive(:new).with(gameweek).and_return(opponent_finder)
         allow(opponent_finder).to receive(:opponent).and_return(opponent)
+        allow(opponent_finder).to receive(:game_venue).and_return(game_venue)
       end
 
       describe 'first row' do
@@ -34,10 +34,14 @@ describe GameweekDataImporter do
           Player.find_by_dk_id(15642242)
         end
 
+        let(:game_venue) { 'home' }
+        let(:opponent) { 'pit' }
+
         it { expect(player.name).to eq 'Christian McCaffrey' }
         it { expect(player.position).to eq 'rb' }
         it { expect(player.team).to eq 'car' }
         it { expect(player.opponent).to eq opponent }
+        it { expect(player.game_venue).to eq game_venue }
         it { expect(player.price).to eq 8_300 }
         it { expect(player.gameweek).to eq gameweek }
       end
@@ -48,10 +52,14 @@ describe GameweekDataImporter do
           Player.find_by_dk_id(15642450)
         end
 
+        let(:game_venue) { 'road' }
+        let(:opponent) { 'buf' }
+
         it { expect(player.name).to eq 'DeAndre Hopkins' }
         it { expect(player.position).to eq 'wr' }
         it { expect(player.team).to eq 'ari' }
         it { expect(player.opponent).to eq opponent }
+        it { expect(player.game_venue).to eq game_venue }
         it { expect(player.price).to eq 8_200 }
         it { expect(player.gameweek).to eq gameweek }
       end

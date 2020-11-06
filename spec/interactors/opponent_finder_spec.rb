@@ -40,4 +40,40 @@ describe OpponentFinder do
       end
     end
   end
+
+  describe "game_venue" do
+    subject(:game_venue) do
+      described_class.new(gameweek).game_venue(team)
+    end
+
+    let(:gameweek) { create(:gameweek) }
+    let(:team) { 'lar' }
+    let(:opponent) { 'sea' }
+
+    context 'when team is at home' do
+      before do
+        create(
+          :scheduled_game,
+          gameweek: gameweek,
+          home_team: team,
+          road_team: opponent
+        )
+      end
+
+      it { expect(game_venue).to eq :home }
+    end
+
+    context 'when team is on the road' do
+      before do
+        create(
+          :scheduled_game,
+          gameweek: gameweek,
+          home_team: opponent,
+          road_team: team
+        )
+      end
+
+      it { expect(game_venue).to eq :road }
+    end
+  end
 end

@@ -5,6 +5,7 @@ FactoryBot.define do
     name { 'Davante Adams' }
     team  { 'gb' }
     opponent { 'hou' }
+    game_venue { 'home' }
     price { 7_900 }
     position { 'wr' }
   end

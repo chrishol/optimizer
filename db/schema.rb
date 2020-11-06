@@ -10,10 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_05_051625) do
+ActiveRecord::Schema.define(version: 2020_11_06_195804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_enum :game_venue, [
+    "home",
+    "road",
+    "neutral",
+  ], force: :cascade
 
   create_enum :nfl_team, [
     "ari",
@@ -91,6 +97,7 @@ ActiveRecord::Schema.define(version: 2020_11_05_051625) do
     t.enum "opponent", null: false, enum_name: "nfl_team"
     t.enum "position", null: false, enum_name: "player_position"
     t.integer "dk_id", null: false
+    t.enum "game_venue", default: "neutral", null: false, enum_name: "game_venue"
     t.index ["gameweek_id"], name: "index_players_on_gameweek_id"
   end
 

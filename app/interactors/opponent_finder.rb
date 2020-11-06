@@ -4,7 +4,11 @@ class OpponentFinder
   end
 
   def opponent(team)
-    opponent_lookup[team]
+    opponent_lookup.dig(team, :team)
+  end
+
+  def game_venue(team)
+    opponent_lookup.dig(team, :game_venue)
   end
 
   private
@@ -19,8 +23,8 @@ class OpponentFinder
     @opponent_lookup ||= begin
       lookup_hash = {}
       scheduled_games.each do |game|
-        lookup_hash[game.home_team] = game.road_team
-        lookup_hash[game.road_team] = game.home_team
+        lookup_hash[game.home_team] = { team: game.road_team, game_venue: :home }
+        lookup_hash[game.road_team] = { team: game.home_team, game_venue: :road }
       end
       lookup_hash
     end
