@@ -22,6 +22,7 @@
             <th class='border border-gray-600 px-4 py-2'>Position</th>
             <th class='border border-gray-600 px-4 py-2'>Player</th>
             <th class='border border-gray-600 px-4 py-2'>Team</th>
+            <th class='border border-gray-600 px-4 py-2'>vs.</th>
             <th class='border border-gray-600 px-4 py-2'>Price</th>
             <th class='border border-gray-600 px-4 py-2'>Select</th>
           </tr>
@@ -32,6 +33,7 @@
             <td class='border border-gray-500 px-4 py-2'><%= player.position.upcase %></td>
             <td class='border border-gray-500 px-4 py-2'><%= player.name %></td>
             <td class='border border-gray-500 px-4 py-2'><%= player.team.upcase %></td>
+            <td class='border border-gray-500 px-4 py-2'><%= player.opponent.upcase %></td>
             <td class='border border-gray-500 px-4 py-2'><%= player.price %></td>
             <td class='border border-gray-500 px-4 py-2 text-center'>
               <%= render partial: 'player_pool_actions',

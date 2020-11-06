@@ -14,12 +14,14 @@ class GameweekDataImporter
 
   def import_csv(csv_path)
     CSV.table(csv_path).each do |row|
+      team = row[:teamabbrev].downcase
+
       Player.where(gameweek: gameweek).find_or_create_by!(dk_id: row[:id]) do |player|
         player.gameweek = gameweek
         player.name = row[:name]
         player.price = row[:salary]
-        player.team = row[:teamabbrev].downcase
-        player.opponent = row[:teamabbrev].downcase
+        player.team = team
+        player.opponent = opponent_finder.opponent(team) || team
         player.position = row[:position].downcase
       end
     end
@@ -28,4 +30,8 @@ class GameweekDataImporter
   private
 
   attr_reader :gameweek
+
+  def opponent_finder
+    @opponent_finder ||= OpponentFinder.new(gameweek)
+  end
 end

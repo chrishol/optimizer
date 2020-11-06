@@ -20,32 +20,38 @@ describe GameweekDataImporter do
     end
 
     describe 'imported fields' do
-      describe 'first row' do
-        subject(:player) { Player.find_by_dk_id(15642242) }
+      let(:opponent_finder) { instance_double(OpponentFinder) }
+      let(:opponent) { 'pit' }
 
-        before do
+      before do
+        allow(OpponentFinder).to receive(:new).with(gameweek).and_return(opponent_finder)
+        allow(opponent_finder).to receive(:opponent).and_return(opponent)
+      end
+
+      describe 'first row' do
+        subject(:player) do
           described_class.new(gameweek).import_csv(tmp_filepath)
+          Player.find_by_dk_id(15642242)
         end
 
         it { expect(player.name).to eq 'Christian McCaffrey' }
         it { expect(player.position).to eq 'rb' }
         it { expect(player.team).to eq 'car' }
-        it { expect(player.opponent).to eq 'car' } # TODO - Fix opponents as DK doesn't provide them
+        it { expect(player.opponent).to eq opponent }
         it { expect(player.price).to eq 8_300 }
         it { expect(player.gameweek).to eq gameweek }
       end
 
       describe 'second row' do
-        subject(:player) { Player.find_by_dk_id(15642450) }
-
-        before do
+        subject(:player) do
           described_class.new(gameweek).import_csv(tmp_filepath)
+          Player.find_by_dk_id(15642450)
         end
 
         it { expect(player.name).to eq 'DeAndre Hopkins' }
         it { expect(player.position).to eq 'wr' }
         it { expect(player.team).to eq 'ari' }
-        it { expect(player.opponent).to eq 'ari' } # TODO - Fix opponents as DK doesn't provide them
+        it { expect(player.opponent).to eq opponent }
         it { expect(player.price).to eq 8_200 }
         it { expect(player.gameweek).to eq gameweek }
       end
