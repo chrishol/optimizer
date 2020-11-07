@@ -20,6 +20,8 @@ $(document).on('turbolinks:load', function () {
           $(selector).html(data.entry);
         } else if (data.lineup) {
           $('#lineups').append(data.lineup);
+        } else if (data.status_message) {
+          $('#status-message').html(data.status_message);
         }
       }
     })

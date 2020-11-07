@@ -3,10 +3,31 @@ class LineupBroadcaster
     @player_pool = player_pool
   end
 
-  def broadcast(lineup)
+  def broadcast_lineup(lineup)
     PlayerPoolChannel.broadcast_to(
       player_pool,
       lineup: render_lineup(lineup)
+    )
+  end
+
+  def broadcast_start
+    PlayerPoolChannel.broadcast_to(
+      player_pool,
+      status_message: 'Finding lineups...'
+    )
+  end
+
+  def broadcast_end(lineup_count)
+    PlayerPoolChannel.broadcast_to(
+      player_pool,
+      status_message: "#{lineup_count} lineups found"
+    )
+  end
+
+  def broadcast_max_reached(max_limit)
+    PlayerPoolChannel.broadcast_to(
+      player_pool,
+      status_message: "Maximum limit (#{max_limit}) reached"
     )
   end
 
