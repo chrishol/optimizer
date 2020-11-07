@@ -35,6 +35,12 @@ class PlayerPoolEntriesController < ApplicationController
     end
   end
 
+  def destroy_all
+    @player_pool = PlayerPool.find(params[:player_pool_id])
+    @player_pool.player_pool_entries.destroy_all
+    redirect_back(fallback_location: gameweeks_path)
+  end
+
   private
 
   def player_pool_entry_params

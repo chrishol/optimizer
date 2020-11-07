@@ -54,17 +54,26 @@
     </div>
   </div>
 
-  <div class="bg-green-200 flex justify-end p-4">
-    <a href='#' class="cursor-pointer hover:bg-green-100 py-2 px-4 mx-1 rounded-full
-                       bg-green-300 text-green-900 text-center align-middle font-semibold">
-     Clear
-    </a>
-    <%= form_with url: lineup_generations_path do |f| %>
-      <%= hidden_field_tag :player_pool_id, @player_pool.id %>
-      <%= f.submit "Find lineups",
-                   class: "cursor-pointer hover:bg-green-400 py-2 px-4 mx-1 rounded-full
-                           bg-green-300 text-green-900 text-center align-middle font-semibold" %>
-    <% end %>
+  <div class='bg-green-200 flex items-center'>
+    <div class='w-1/2 p-4'>
+      <span id='status-message' class='text-green-900'></span>
+    </div>
+    <div class='w-1/2 flex justify-end p-4'>
+      <%= link_to(
+        'Clear',
+        destroy_all_player_pool_player_pool_entries_path(@player_pool.id),
+        method: :delete,
+        class: 'cursor-pointer hover:bg-green-100 py-2 px-4 mx-1 rounded-full
+                bg-green-300 text-green-900 text-center align-middle font-semibold'
+      ) %>
+
+      <%= form_with url: lineup_generations_path do |f| %>
+        <%= hidden_field_tag :player_pool_id, @player_pool.id %>
+        <%= f.submit 'Find lineups',
+                     class: 'cursor-pointer hover:bg-green-400 py-2 px-4 mx-1 rounded-full
+                             bg-green-300 text-green-900 text-center align-middle font-semibold' %>
+      <% end %>
+    </div>
   </div>
 </div>
 

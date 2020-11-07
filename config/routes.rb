@@ -8,4 +8,10 @@ Rails.application.routes.draw do
   resources :player_pool_entries, only: %w(create destroy)
 
   resources :lineup_generations, only: %w(create)
+
+  resources :player_pools, only: [] do
+    resources :player_pool_entries, only: [] do
+      delete :destroy_all, on: :collection
+    end
+  end
 end
