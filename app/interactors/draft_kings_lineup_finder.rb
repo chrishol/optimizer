@@ -15,9 +15,7 @@ class DraftKingsLineupFinder
       broadcaster.broadcast_start if broadcast
 
       DraftKingsLineupGenerator.new(player_pool).lineup_iterator do |lineup|
-        next unless lineup.valid? &&
-                    !lineup_solutions.include?(lineup) &&
-                    min_price <= lineup.total_price &&
+        next unless min_price <= lineup.total_price &&
                     lineup.total_price <= max_price
 
         lineup_solutions << lineup

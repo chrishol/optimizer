@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_06_195804) do
+ActiveRecord::Schema.define(version: 2020_11_11_195920) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 2020_11_06_195804) do
     t.bigint "player_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "is_locked", default: false
     t.index ["player_id"], name: "index_player_pool_entries_on_player_id"
     t.index ["player_pool_id"], name: "index_player_pool_entries_on_player_pool_id"
   end
