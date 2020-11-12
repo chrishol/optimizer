@@ -36,7 +36,7 @@ class LineupBroadcaster
   attr_reader :player_pool
 
   def render_lineup(lineup)
-    view = ActionView::Base.new(ActionController::Base.view_paths, {})
+    view = ApplicationController.new.view_context
     view.render(partial: 'draft_kings_lineups/show', locals: { lineup: lineup })
   end
 end

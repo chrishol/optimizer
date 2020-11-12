@@ -17,7 +17,10 @@
       <div class="table-cell bg-gray-100 text-gray-700 w-12 p-2 text-sm text-center font-bold">
         $
       </div>
-      <div class="table-cell bg-gray-200 text-gray-700 w-40 p-2 text-sm">
+      <div class="table-cell bg-gray-200 text-gray-700 w-40 p-2 text-sm align-middle">
+        <div class="flex justify-center items-center h-4 text-yellow-600 font-bold">
+          <%= stack_description(lineup) %>
+        </div>
       </div>
       <div class="table-cell bg-gray-400 text-gray-700 w-12 p-2 text-sm">
         <%= lineup.total_price %>
