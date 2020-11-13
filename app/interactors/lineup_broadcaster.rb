@@ -13,6 +13,7 @@ class LineupBroadcaster
   def broadcast_start
     PlayerPoolChannel.broadcast_to(
       player_pool,
+      reset_results: true,
       status_message: 'Finding lineups...'
     )
   end

@@ -18,6 +18,23 @@ class PlayerPoolEntriesController < ApplicationController
     end
   end
 
+  def update
+    @entry = PlayerPoolEntry.find(params[:id])
+    @entry.update_attributes(player_pool_entry_params)
+
+    respond_to do |format|
+      format.html { redirect_back(fallback_location: gameweeks_path) }
+      format.js {
+        PlayerPoolChannel.broadcast_to(
+          @entry.player_pool,
+          player_id: @entry.player_id,
+          entry: render_created_entry(@entry)
+        )
+        head :ok
+      }
+    end
+  end
+
   def destroy
     @entry = PlayerPoolEntry.find(params[:id])
     @entry.destroy
@@ -44,7 +61,7 @@ class PlayerPoolEntriesController < ApplicationController
   private
 
   def player_pool_entry_params
-    params.require(:player_pool_entry).permit(:player_pool_id, :player_id)
+    params.require(:player_pool_entry).permit(:player_pool_id, :player_id, :is_locked)
   end
 
   def render_created_entry(entry)

@@ -44,6 +44,47 @@ RSpec.describe "PlayerPoolEntries", type: :request do
     end
   end
 
+  describe "PUT /update" do
+    let!(:player_pool) { create(:player_pool) }
+    let!(:player_pool_entry) { create(:player_pool_entry, player_pool: player_pool) }
+
+    describe "request" do
+      subject(:update_request) do
+        put "/player_pool_entries/#{player_pool_entry.id}", params: {
+          player_pool_entry: {
+            is_locked: true
+          }
+        }
+      end
+
+      it "returns 302 redirect" do
+        update_request
+        expect(response).to have_http_status(:found)
+      end
+
+      it "updates the entry record" do
+        expect {
+          update_request
+          player_pool_entry.reload
+        }.to change(player_pool_entry, :updated_at)
+      end
+    end
+
+    describe "updated attributes" do
+      subject(:updated_entry) { PlayerPoolEntry.last }
+
+      before do
+        put "/player_pool_entries/#{player_pool_entry.id}", params: {
+          player_pool_entry: {
+            is_locked: true
+          }
+        }
+      end
+
+      it { expect(updated_entry.is_locked).to eq true }
+    end
+  end
+
   describe "DELETE /destroy" do
     let!(:player_pool_entry) { create(:player_pool_entry) }
 

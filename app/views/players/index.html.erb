@@ -9,10 +9,14 @@
       </h1>
 
       <div class="inline-flex w-full justify-center mb-4">
+        <%= link_to 'All',
+                    params.permit(:position).merge(position: nil),
+                    class:"bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold mx-1 py-2 px-4 rounded" %>
         <% Player::PLAYER_POSITIONS.each do |position| %>
           <%= link_to position.upcase,
                       params.permit(:position).merge(position: position),
-                      class:"bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" %>
+                      class: "#{'bg-gray-400' if position == params[:position]}
+                              bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold mx-1 py-2 px-4 rounded" %>
         <% end %>
       </div>
 
@@ -24,7 +28,7 @@
             <th class='border border-gray-600 px-4 py-2'>Team</th>
             <th class='border border-gray-600 px-4 py-2'>vs.</th>
             <th class='border border-gray-600 px-4 py-2'>Price</th>
-            <th class='border border-gray-600 px-4 py-2'>Select</th>
+            <th class='border border-gray-600 px-4 py-2'>Actions</th>
           </tr>
         </thead>
         <tbody>

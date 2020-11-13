@@ -15,6 +15,10 @@ $(document).on('turbolinks:load', function () {
       },
 
       received(data) {
+        if (data.reset_results) {
+          $('#lineups').html('');
+        }
+
         if (data.player_id) {
           var selector = 'div[data-player-id="player-pool-entry-form-'.concat(data.player_id).concat('"');
           $(selector).html(data.entry);

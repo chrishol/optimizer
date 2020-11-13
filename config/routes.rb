@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     resources :players, only: %w(index)
   end
 
-  resources :player_pool_entries, only: %w(create destroy)
+  resources :player_pool_entries, only: %w(create update destroy)
 
   resources :lineup_generations, only: %w(create)
 
