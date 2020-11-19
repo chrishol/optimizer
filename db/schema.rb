@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_11_195920) do
+ActiveRecord::Schema.define(version: 2020_11_17_232123) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -102,6 +102,26 @@ ActiveRecord::Schema.define(version: 2020_11_11_195920) do
     t.index ["gameweek_id"], name: "index_players_on_gameweek_id"
   end
 
+  create_table "projection_sets", force: :cascade do |t|
+    t.bigint "gameweek_id", null: false
+    t.string "source", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["gameweek_id"], name: "index_projection_sets_on_gameweek_id"
+  end
+
+  create_table "projections", force: :cascade do |t|
+    t.bigint "projection_set_id", null: false
+    t.bigint "player_id", null: false
+    t.decimal "projection", precision: 3, scale: 2, default: "0.0"
+    t.decimal "projected_value", precision: 3, scale: 2, default: "0.0"
+    t.decimal "projected_ownership", precision: 3, scale: 2, default: "0.0"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["player_id"], name: "index_projections_on_player_id"
+    t.index ["projection_set_id"], name: "index_projections_on_projection_set_id"
+  end
+
   create_table "scheduled_games", force: :cascade do |t|
     t.bigint "gameweek_id", null: false
     t.datetime "start_time", null: false
@@ -116,5 +136,8 @@ ActiveRecord::Schema.define(version: 2020_11_11_195920) do
   add_foreign_key "player_pool_entries", "players"
   add_foreign_key "player_pools", "gameweeks"
   add_foreign_key "players", "gameweeks"
+  add_foreign_key "projection_sets", "gameweeks"
+  add_foreign_key "projections", "players"
+  add_foreign_key "projections", "projection_sets"
   add_foreign_key "scheduled_games", "gameweeks"
 end
