@@ -113,9 +113,9 @@ ActiveRecord::Schema.define(version: 2020_11_17_232123) do
   create_table "projections", force: :cascade do |t|
     t.bigint "projection_set_id", null: false
     t.bigint "player_id", null: false
-    t.decimal "projection", precision: 3, scale: 2, default: "0.0"
-    t.decimal "projected_value", precision: 3, scale: 2, default: "0.0"
-    t.decimal "projected_ownership", precision: 3, scale: 2, default: "0.0"
+    t.decimal "projection", precision: 5, scale: 2, default: "0.0"
+    t.decimal "projected_value", precision: 5, scale: 2, default: "0.0"
+    t.decimal "projected_ownership", precision: 5, scale: 2, default: "0.0"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["player_id"], name: "index_projections_on_player_id"

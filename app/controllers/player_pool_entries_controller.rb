@@ -20,7 +20,7 @@ class PlayerPoolEntriesController < ApplicationController
 
   def update
     @entry = PlayerPoolEntry.find(params[:id])
-    @entry.update_attributes(player_pool_entry_params)
+    @entry.update(player_pool_entry_params)
 
     respond_to do |format|
       format.html { redirect_back(fallback_location: gameweeks_path) }
