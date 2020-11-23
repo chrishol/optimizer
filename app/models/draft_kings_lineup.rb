@@ -40,6 +40,12 @@ class DraftKingsLineup
     Set.new(players) == Set.new(other.players)
   end
 
+  def projection(projection_set)
+    players.sum do |player|
+      projection_set.projections.find { |proj| proj.player_id == player.id }.projection
+    end
+  end
+
   private
 
   attr_writer :players
