@@ -64,6 +64,7 @@ GEM
       msgpack (~> 1.0)
     builder (3.2.4)
     byebug (11.1.3)
+    cbc-wrapper (2.9.9.4)
     concurrent-ruby (1.1.7)
     connection_pool (2.2.3)
     crass (1.0.6)
@@ -156,6 +157,8 @@ GEM
       rspec-mocks (~> 3.9)
       rspec-support (~> 3.9)
     rspec-support (3.9.3)
+    ruby-cbc (0.3.18)
+      cbc-wrapper (~> 2.9.9.2)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
     sassc (2.4.0)
@@ -218,6 +221,7 @@ DEPENDENCIES
   rails (~> 6.0.3, >= 6.0.3.3)
   redis (~> 4.0)
   rspec-rails (~> 4.0.1)
+  ruby-cbc
   sass-rails (>= 6)
   sidekiq (~> 6.1.2)
   spring
