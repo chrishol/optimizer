@@ -8,10 +8,21 @@ class DraftKingsLineup
   DST_COUNT = 1
   TOTAL_PLAYER_COUNT = QB_COUNT + RB_COUNT + WR_COUNT + TE_COUNT + FLEX_COUNT + DST_COUNT
 
-  attr_reader :players
+  PLAYER_POSITION_SORT_ORDER = {
+    qb: 0,
+    rb: 1,
+    wr: 2,
+    te: 3,
+    dst: 4
+  }.with_indifferent_access
+  PLAYER_SORT = proc { |player| [PLAYER_POSITION_SORT_ORDER.fetch(player.position), -player.price] }
 
   def initialize(players)
     @players = players
+  end
+
+  def players
+    @players.sort_by(&PLAYER_SORT)
   end
 
   def valid?

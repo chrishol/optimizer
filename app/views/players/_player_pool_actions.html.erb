@@ -1,7 +1,7 @@
 <div class='flex justify-center' data-player-id="player-pool-entry-form-<%= entry.player_id %>">
   <% if entry.persisted? %>
-    <%= render partial: 'remove_from_pool', locals: { entry: entry } %>
+    <%= render partial: 'players/remove_from_pool', locals: { entry: entry } %>
   <% else %>
-    <%= render partial: 'add_to_pool', locals: { entry: entry } %>
+    <%= render partial: 'players/add_to_pool', locals: { entry: entry } %>
   <% end %>
 </div>
