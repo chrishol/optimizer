@@ -30,7 +30,7 @@ gem 'activerecord-postgres_enum', '~> 1.4.0'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
-gem 'sidekiq', '~>6.1.2'
+gem 'sidekiq', '~> 6.1.2'
 
 gem 'ruby-cbc'
 

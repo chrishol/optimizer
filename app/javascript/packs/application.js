@@ -9,6 +9,8 @@ require("@rails/activestorage").start()
 require("channels")
 require("jquery")
 
+require("chart.js")
+
 // Tailwind CSS
 import "stylesheets/application"
 
