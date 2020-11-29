@@ -28,25 +28,15 @@
             <th class='border border-gray-600 px-4 py-2'>Team</th>
             <th class='border border-gray-600 px-4 py-2'>vs.</th>
             <th class='border border-gray-600 px-4 py-2'>Price</th>
+            <th class='border border-gray-600 px-4 py-2'>Status</th>
             <th class='border border-gray-600 px-4 py-2'>Actions</th>
           </tr>
         </thead>
         <tbody>
           <% @players.each do |player| %>
-          <tr>
-            <td class='border border-gray-500 px-4 py-2'><%= player.position.upcase %></td>
-            <td class='border border-gray-500 px-4 py-2'><%= player.name %></td>
-            <td class='border border-gray-500 px-4 py-2'><%= player.team.upcase %></td>
-            <td class='border border-gray-500 px-4 py-2'>
-              <%= game_venue_symbol(player) %>
-              <%= player.opponent.upcase %>
-            </td>
-            <td class='border border-gray-500 px-4 py-2'><%= player.price %></td>
-            <td class='border border-gray-500 px-4 py-2 text-center'>
-              <%= render partial: 'player_pool_actions',
-                         locals: { entry: player_pool_entry_for(@player_pool, player) } %>
-            </td>
-          </tr>
+            <tr data-player-id="player-pool-entry-form-<%= player.id %>">
+              <%= render partial: 'players/player_row', locals: { player_pool: @player_pool, player: player } %>
+            </tr>
           <% end %>
         </tbody>
       </table>

@@ -1,0 +1,11 @@
+
+<td class='border border-gray-500 px-4 py-2'><%= player.position.upcase %></td>
+<td class='border border-gray-500 px-4 py-2'><%= player.name %></td>
+<td class='border border-gray-500 px-4 py-2'><%= player.team.upcase %></td>
+<td class='border border-gray-500 px-4 py-2'>
+  <%= game_venue_symbol(player) %>
+  <%= player.opponent.upcase %>
+</td>
+<td class='border border-gray-500 px-4 py-2'><%= player.price %></td>
+<%= render partial: 'players/player_pool_actions',
+           locals: { entry: player_pool_entry_for(player_pool, player) } %>

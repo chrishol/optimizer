@@ -20,8 +20,8 @@ $(document).on('turbolinks:load', function () {
         }
 
         if (data.player_id) {
-          var selector = 'div[data-player-id="player-pool-entry-form-'.concat(data.player_id).concat('"');
-          $(selector).html(data.entry);
+          var selector = 'tr[data-player-id="player-pool-entry-form-'.concat(data.player_id).concat('"');
+          $(selector).html(data.player_row);
         } else if (data.lineup) {
           $('#lineups').append(data.lineup);
         } else if (data.status_message) {

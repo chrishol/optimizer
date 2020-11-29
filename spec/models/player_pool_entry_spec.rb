@@ -13,5 +13,11 @@ RSpec.describe PlayerPoolEntry, type: :model do
     it 'is invalid without a player' do
       expect(build(:player_pool_entry, player: nil)).not_to be_valid
     end
+
+    describe 'locked and excluded' do
+      it { expect(build(:player_pool_entry, is_locked: true)).to be_valid }
+      it { expect(build(:player_pool_entry, is_excluded: true)).to be_valid }
+      it { expect(build(:player_pool_entry, is_locked: true, is_excluded: true)).not_to be_valid }
+    end
   end
 end

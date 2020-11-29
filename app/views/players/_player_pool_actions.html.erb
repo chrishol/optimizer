@@ -1,7 +1,9 @@
-<div class='flex justify-center' data-player-id="player-pool-entry-form-<%= entry.player_id %>">
-  <% if entry.persisted? %>
-    <%= render partial: 'players/remove_from_pool', locals: { entry: entry } %>
+<% if entry.persisted? %>
+  <% if entry.is_excluded %>
+    <%= render partial: 'players/excluded_from_pool_actions', locals: { entry: entry } %>
   <% else %>
-    <%= render partial: 'players/add_to_pool', locals: { entry: entry } %>
+    <%= render partial: 'players/added_to_pool_actions', locals: { entry: entry } %>
   <% end %>
-</div>
+<% else %>
+  <%= render partial: 'players/out_of_pool_actions', locals: { entry: entry } %>
+<% end %>

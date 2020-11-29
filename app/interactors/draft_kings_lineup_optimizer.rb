@@ -5,6 +5,20 @@ class DraftKingsLineupOptimizer
 
   attr_accessor :is_solved
 
+  def initialize(players,
+                 projection_set,
+                 min_price: DEFAULT_MIN_PRICE,
+                 excluded_lineups: [],
+                 locked_player_ids: [],
+                 excluded_player_ids: [])
+    @players = players
+    @projection_set = projection_set
+    @min_price = min_price
+    @excluded_lineups = excluded_lineups
+    @locked_player_ids = locked_player_ids
+    @excluded_player_ids = excluded_player_ids
+  end
+
   def optimal_lineup
     solve
     DraftKingsLineup.new(
@@ -26,7 +40,8 @@ class DraftKingsLineupOptimizer
 
   private
 
-  attr_reader :problem, :players, :projection_set, :min_price, :excluded_lineups, :locked_player_ids
+  attr_reader :problem, :players, :projection_set, :min_price, :excluded_lineups,
+              :locked_player_ids, :excluded_player_ids
 
   def solve
     return if is_solved
@@ -34,6 +49,7 @@ class DraftKingsLineupOptimizer
     add_position_constraints
     add_price_constraints
     add_locked_player_constraints
+    add_excluded_player_constraints
     add_excluded_lineups_constraints
     maximize_projection
     solve_problem
@@ -101,6 +117,16 @@ class DraftKingsLineupOptimizer
         model_variables.fetch(
           players.find { |player, var| player.id == player_id }
         ) == 1
+      )
+    end
+  end
+
+  def add_excluded_player_constraints
+    excluded_player_ids.each do |player_id|
+      model.enforce(
+        model_variables.fetch(
+          players.find { |player, var| player.id == player_id }
+        ) == 0
       )
     end
   end

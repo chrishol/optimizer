@@ -18,7 +18,8 @@ class DraftKingsLineupGenerator
                   [qb].concat(rbs).concat(wrs).concat([te, flex, dst])
                 )
                 next unless lineup.valid? && !all_lineups.include?(lineup) &&
-                            lineup_contains_all_locked_players?(lineup)
+                            lineup_contains_all_locked_players?(lineup) &&
+                            lineup_excludes_all_excluded_players?(lineup)
 
                 all_lineups << lineup
                 yield lineup
@@ -42,7 +43,15 @@ class DraftKingsLineupGenerator
     @locked_player_ids ||= player_pool.player_pool_entries.select(&:is_locked).map(&:player_id)
   end
 
+  def excluded_player_ids
+    @excluded_player_ids ||= player_pool.player_pool_entries.select(&:is_excluded).map(&:player_id)
+  end
+
   def lineup_contains_all_locked_players?(lineup)
     (locked_player_ids - lineup.players.map(&:id)).empty?
+  end
+
+  def lineup_excludes_all_excluded_players?(lineup)
+    (excluded_player_ids & lineup.players.map(&:id)).empty?
   end
 end

@@ -80,5 +80,45 @@ describe DraftKingsLineupGenerator do
         expect(lineup_iterator).not_to yield_control
       end
     end
+
+    context 'when players are excluded' do
+      before do
+        players.each_with_index do |player, index|
+          create(
+            :player_pool_entry,
+            player_pool: player_pool,
+            player: player,
+            is_excluded: (index == 0)
+          )
+        end
+      end
+
+      it "yields the results that exclude all the locked players" do
+        expect(lineup_iterator).to yield_control.exactly(1).times
+      end
+
+      it "yields a lineup class for each result" do
+        expect(lineup_iterator).to yield_with_args(
+          be_a(DraftKingsLineup)
+        )
+      end
+    end
+
+    context 'when too many players are excluded to create a valid lineup' do
+      before do
+        players.each_with_index do |player, index|
+          create(
+            :player_pool_entry,
+            player_pool: player_pool,
+            player: player,
+            is_excluded: (player.position == 'qb')
+          )
+        end
+      end
+
+      it "does not yield any results" do
+        expect(lineup_iterator).not_to yield_control
+      end
+    end
   end
 end

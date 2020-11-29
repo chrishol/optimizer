@@ -30,7 +30,6 @@
           <th class='border border-gray-600 px-4 py-2'>Proj</th>
           <th class='border border-gray-600 px-4 py-2'>Value</th>
           <th class='border border-gray-600 px-4 py-2'>Ownership</th>
-          <th class='border border-gray-600 px-4 py-2'>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -47,10 +46,6 @@
           <td class='border border-gray-500 px-4 py-2'><%= player.projections.first.projection %></td>
           <td class='border border-gray-500 px-4 py-2'><%= player.projections.first.projected_value %>x</td>
           <td class='border border-gray-500 px-4 py-2'><%= player.projections.first.projected_ownership %>%</td>
-          <td class='border border-gray-500 px-4 py-2 text-center'>
-            <%= render partial: 'players/player_pool_actions',
-                       locals: { entry: player_pool_entry_for(@player_pool, player) } %>
-          </td>
         </tr>
         <% end %>
       </tbody>

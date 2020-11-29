@@ -3,7 +3,7 @@ class PlayerPoolEntriesController < ApplicationController
     @entry = PlayerPoolEntry.where(
       player_pool_id: player_pool_entry_params[:player_pool_id],
       player_id: player_pool_entry_params[:player_id]
-    ).first_or_create
+    ).first_or_create(player_pool_entry_params)
 
     respond_to do |format|
       format.html { redirect_back(fallback_location: gameweeks_path) }
@@ -11,7 +11,7 @@ class PlayerPoolEntriesController < ApplicationController
         PlayerPoolChannel.broadcast_to(
           @entry.player_pool,
           player_id: @entry.player_id,
-          entry: render_created_entry(@entry)
+          player_row: render_player_row(@entry)
         )
         head :ok
       }
@@ -28,7 +28,7 @@ class PlayerPoolEntriesController < ApplicationController
         PlayerPoolChannel.broadcast_to(
           @entry.player_pool,
           player_id: @entry.player_id,
-          entry: render_created_entry(@entry)
+          player_row: render_player_row(@entry)
         )
         head :ok
       }
@@ -45,7 +45,7 @@ class PlayerPoolEntriesController < ApplicationController
         PlayerPoolChannel.broadcast_to(
           @entry.player_pool,
           player_id: @entry.player_id,
-          entry: render_deleted_entry(@entry)
+          player_row: render_player_row(@entry)
         )
         head :ok
       }
@@ -61,14 +61,15 @@ class PlayerPoolEntriesController < ApplicationController
   private
 
   def player_pool_entry_params
-    params.require(:player_pool_entry).permit(:player_pool_id, :player_id, :is_locked)
+    params.require(:player_pool_entry).permit(
+      :player_pool_id,
+      :player_id,
+      :is_locked,
+      :is_excluded
+    )
   end
 
-  def render_created_entry(entry)
-    render(partial: 'players/remove_from_pool', locals: { entry: entry })
-  end
-
-  def render_deleted_entry(entry)
-    render(partial: 'players/add_to_pool', locals: { entry: entry })
+  def render_player_row(entry)
+    render(partial: 'players/player_row', locals: { player_pool: entry.player_pool, player: entry.player })
   end
 end
