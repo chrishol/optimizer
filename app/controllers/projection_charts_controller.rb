@@ -1,6 +1,4 @@
-class ProjectionChartsController < ApplicationController
-  before_action :load_gameweek, :load_player_pool
-
+class ProjectionChartsController < DfsToolsController
   def index
     @players = Player.left_joins(projections: :projection_set)
                      .where(
@@ -12,17 +10,6 @@ class ProjectionChartsController < ApplicationController
   end
 
   private
-
-  attr_reader :gameweek
-
-  def load_gameweek
-    @gameweek = Gameweek.find(params[:gameweek_id])
-  end
-
-  def load_player_pool
-    @player_pool = PlayerPool.where(gameweek: gameweek).first_or_create
-    @player_pool.player_pool_entries.includes(:player)
-  end
 
   def filter_params_valid?
     Player::PLAYER_POSITIONS.include?(params[:position])

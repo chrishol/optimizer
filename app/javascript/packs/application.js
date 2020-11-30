@@ -11,6 +11,8 @@ require("jquery")
 
 require("chart.js")
 
+import '../src/navigation.js';
+
 // Tailwind CSS
 import "stylesheets/application"
 
