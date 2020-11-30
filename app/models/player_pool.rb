@@ -6,4 +6,7 @@ class PlayerPool < ApplicationRecord
     player_pool_entries.includes(:player).map(&:player)
   end
 
+  def empty?
+    player_pool_entries.empty?
+  end
 end

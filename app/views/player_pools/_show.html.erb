@@ -1,10 +1,23 @@
-<h3 class="text-sm font-bold text-gray-400 mb-2">
-  YOUR PLAYER POOL
-</h3>
+<div class="flex flex-row space-x-4 items-center mb-2">
+  <h3 class="text-sm font-bold text-gray-400">
+    YOUR PLAYER POOL
+  </h3>
+  <% unless player_pool.empty? %>
+    <%= link_to(
+            'Clear',
+            destroy_all_player_pool_player_pool_entries_path(player_pool.id),
+            method: :delete,
+            data: { confirm: 'Are you sure?' },
+            local: true,
+            class: 'cursor-pointer hover:bg-gray-100 rounded-full px-4 py-1
+                    text-gray-500 text-xs text-center border border-gray-200'
+          ) %>
+  <% end %>
+</div>
 
 <div class="flex flex-row flex-wrap -mx-2">
   <% player_pool.player_pool_entries.each do |entry| %>
-    <div class="inline-flex space-x-0 items-center rounded-lg shadow w-48 h-6 mx-2 my-1">
+    <div class="inline-flex space-x-0 items-center rounded-lg shadow w-48 h-6 m-1">
       <div class="flex flex-none items-center justify-center w-1/5 h-full bg-gray-700 rounded-l-lg">
         <span class="text-white text-xs font-bold uppercase">
           <%= entry.player.position %>

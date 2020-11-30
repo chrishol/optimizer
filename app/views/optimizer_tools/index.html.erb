@@ -3,6 +3,13 @@
 <% end %>
 
 <div class='flex flex-col min-h-screen bg-white'>
+  <div id='player-pool' class='sm:px-0'>
+    <%= render partial: 'player_pools/show',
+               locals: { player_pool: @player_pool } %>
+  </div>
+
+  <hr class='my-4'>
+
   <div class='h-16 bg-green-200 flex items-center'>
     <div class='w-1/2 p-4'>
       <span id='status-message' class='text-green-900'></span>

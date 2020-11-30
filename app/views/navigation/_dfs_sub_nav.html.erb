@@ -8,17 +8,29 @@
       </div>
       <div class="hidden md:block">
         <div class="ml-10 flex items-baseline space-x-4">
-          <%= link_to gameweek_players_path(@gameweek),
-                      class: 'px-3 py-2 rounded-md text-sm font-medium text-gray-900 bg-gray-200' do %>
-            Projections
+          <%= link_to_unless_current(
+                'Projections',
+                gameweek_players_path(@gameweek),
+                class: 'px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-800 hover:bg-gray-100') do %>
+            <span class='px-3 py-2 rounded-md text-sm font-medium text-gray-900 bg-gray-200'>
+              Projections
+            </span>
           <% end %>
-          <%= link_to gameweek_projection_charts_path(@gameweek),
-                      class: 'px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-800 hover:bg-gray-100' do %>
-            Charts
+          <%= link_to_unless_current(
+                'Charts',
+                gameweek_projection_charts_path(@gameweek),
+                class: 'px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-800 hover:bg-gray-100') do %>
+            <span class='px-3 py-2 rounded-md text-sm font-medium text-gray-900 bg-gray-200'>
+              Charts
+            </span>
           <% end %>
-          <%= link_to gameweek_optimizer_tools_path(@gameweek),
-                      class: 'px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-800 hover:bg-gray-100' do %>
-            Optimizer
+          <%= link_to_unless_current(
+                'Optimizer',
+                gameweek_optimizer_tools_path(@gameweek),
+                class: 'px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-800 hover:bg-gray-100') do %>
+            <span class='px-3 py-2 rounded-md text-sm font-medium text-gray-900 bg-gray-200'>
+              Optimizer
+            </span>
           <% end %>
           <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-800 hover:bg-gray-100">Lineups</a>
           <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-800 hover:bg-gray-100">Swaps</a>

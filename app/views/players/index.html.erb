@@ -2,12 +2,12 @@
   <%= render partial: 'navigation/dfs_sub_nav' %>
 <% end %>
 
-<div id='player-pool' class='p-2 sm:px-0'>
+<div id='player-pool' class='sm:px-0'>
   <%= render partial: 'player_pools/show',
              locals: { player_pool: @player_pool } %>
 </div>
 
-<hr>
+<hr class='my-4'>
 
 <div class='flex flex-col min-h-screen mt-4'>
   <div class='flex-none bg-white'>

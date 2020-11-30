@@ -2,16 +2,15 @@
 
 ### App Design
 
-- Upgrade to Tailwind 2.0
 - Nav bar elements selected based on path
-- Add javascript for dropdown
-- Make all links interactive
 
 ### General
 
 - Authentication
 
 ### DFS
+
+- Show increase/decrease from previous gameweek
 
 - Import actual scores (DraftKings history export)
 - Chart actual value versus actual ownership

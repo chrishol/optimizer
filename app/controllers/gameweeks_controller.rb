@@ -1,12 +1,11 @@
 class GameweeksController < ApplicationController
-  before_action :load_navigable_gameweeks
-
   def index
+    redirect_to gameweek_players_path(most_recent_player.gameweek)
   end
 
   private
 
-  def load_navigable_gameweeks
-    @navigable_gameweeks = Gameweek.all.order('season ASC, week_number ASC')
+  def most_recent_player
+    Player.last
   end
 end
