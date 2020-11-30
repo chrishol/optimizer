@@ -1,6 +1,6 @@
-class PlayerPoolOptimizer < DraftKingsLineupOptimizer
-  def initialize(player_pool, projection_set, excluded_lineups: [])
-    super(
+class PlayerPoolOptimizer
+  def self.build(player_pool, projection_set, excluded_lineups: [])
+    DraftKingsLineupOptimizer.new(
       player_pool.players,
       projection_set,
       excluded_lineups: excluded_lineups,

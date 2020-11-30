@@ -1,6 +1,6 @@
-class GameweekOptimizer < DraftKingsLineupOptimizer
-  def initialize(gameweek, player_pool, projection_set, excluded_lineups: [])
-    super(
+class GameweekOptimizer
+  def self.build(gameweek, player_pool, projection_set, excluded_lineups: [])
+    DraftKingsLineupOptimizer.new(
       gameweek.players,
       projection_set,
       excluded_lineups: excluded_lineups,

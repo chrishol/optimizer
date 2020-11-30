@@ -3,12 +3,14 @@ Rails.application.routes.draw do
 
   resources :gameweeks, only: %w(index) do
     resources :players, only: %w(index)
-    # resources :player_projections, only: %w(index)
+    resources :optimizer_tools, only: %w(index)
   end
 
   resources :player_pool_entries, only: %w(create update destroy)
 
   resources :lineup_generations, only: %w(create)
+  resources :player_pool_optimizations, only: %w(create)
+  resources :gameweek_optimizations, only: %w(create)
 
   resources :player_pools, only: [] do
     resources :player_pool_entries, only: [] do

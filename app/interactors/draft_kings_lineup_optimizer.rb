@@ -19,6 +19,17 @@ class DraftKingsLineupOptimizer
     @excluded_player_ids = excluded_player_ids
   end
 
+  def reoptimize(excluded_lineups: [])
+    self.class.new(
+      @players,
+      @projection_set,
+      min_price: @min_price,
+      excluded_lineups: excluded_lineups,
+      locked_player_ids: @locked_player_ids,
+      excluded_player_ids: @excluded_player_ids
+    )
+  end
+
   def optimal_lineup
     solve
     DraftKingsLineup.new(
