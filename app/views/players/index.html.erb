@@ -2,71 +2,90 @@
   <%= render partial: 'navigation/gameweek_nav',
              locals: { navigable_gameweeks: @navigable_gameweeks } %>
 
-  <div class='flex-1 flex overflow-y-hidden'>
-    <div class='w-1/2 flex-none overflow-y-auto'>
-      <h1 class='my-8 text-2xl text-center font-black'>
-        Week <%= @gameweek.week_number %> - Players
-      </h1>
+  <div class='flex-none bg-white pb-8'>
+    <h1 class='my-8 text-2xl text-center font-black'>
+      Week <%= @gameweek.week_number %> - Players
+    </h1>
 
-      <div class="inline-flex w-full justify-center mb-4">
-        <%= link_to 'All',
-                    params.permit(:position).merge(position: nil),
-                    class:"bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold mx-1 py-2 px-4 rounded" %>
-        <% Player::PLAYER_POSITIONS.each do |position| %>
-          <%= link_to position.upcase,
-                      params.permit(:position).merge(position: position),
-                      class: "#{'bg-gray-400' if position == params[:position]}
-                              bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold mx-1 py-2 px-4 rounded" %>
-        <% end %>
-      </div>
-
-      <table class='table-auto mx-auto border-collapse border-2 border-gray-800'>
-        <thead class='bg-gray-500'>
-          <tr>
-            <th class='border border-gray-600 px-4 py-2'>Position</th>
-            <th class='border border-gray-600 px-4 py-2'>Player</th>
-            <th class='border border-gray-600 px-4 py-2'>Team</th>
-            <th class='border border-gray-600 px-4 py-2'>vs.</th>
-            <th class='border border-gray-600 px-4 py-2'>Price</th>
-            <th class='border border-gray-600 px-4 py-2'>Status</th>
-            <th class='border border-gray-600 px-4 py-2'>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @players.each do |player| %>
-            <tr data-player-id="player-pool-entry-form-<%= player.id %>">
-              <%= render partial: 'players/player_row', locals: { player_pool: @player_pool, player: player } %>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-
-    <div class='bg-red-100 w-1/2 overflow-y-auto'>
-      <div id='lineups' class='flex flex-row flex-wrap justify-center'>
-      </div>
-    </div>
-  </div>
-
-  <div class='bg-green-200 flex items-center'>
-    <div class='w-1/2 p-4'>
-      <span id='status-message' class='text-green-900'></span>
-    </div>
-    <div class='w-1/2 flex justify-end p-4'>
-      <%= link_to(
-        'Clear',
-        destroy_all_player_pool_player_pool_entries_path(@player_pool.id),
-        method: :delete,
-        class: 'cursor-pointer hover:bg-green-100 py-2 px-4 mx-1 rounded-full
-                bg-green-300 text-green-900 text-center align-middle font-semibold'
-      ) %>
-
-      <%= form_with url: lineup_generations_path do |f| %>
-        <%= hidden_field_tag :player_pool_id, @player_pool.id %>
-        <%= f.submit 'Find lineups',
-                     class: 'cursor-pointer hover:bg-green-400 py-2 px-4 mx-1 rounded-full
-                             bg-green-300 text-green-900 text-center align-middle font-semibold' %>
+    <div class="inline-flex w-full justify-center mb-4">
+      <%= link_to 'All',
+                  params.permit(:position).merge(position: nil),
+                  class:"bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold mx-1 py-2 px-4 rounded" %>
+      <% Player::PLAYER_POSITIONS.each do |position| %>
+        <%= link_to position.upcase,
+                    params.permit(:position).merge(position: position),
+                    class: "#{'bg-gray-400' if position == params[:position]}
+                            bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold mx-1 py-2 px-4 rounded" %>
       <% end %>
+    </div>
+
+    <table class='table-auto mx-auto border-collapse border-2 border-gray-800'>
+      <thead class='bg-gray-500'>
+        <tr>
+          <th class='border border-gray-600 px-4 py-2'>Position</th>
+          <th class='border border-gray-600 px-4 py-2'>Player</th>
+          <th class='border border-gray-600 px-4 py-2'>Team</th>
+          <th class='border border-gray-600 px-4 py-2'>vs.</th>
+          <th class='border border-gray-600 px-4 py-2'>Price</th>
+          <th class='border border-gray-600 px-4 py-2'>Proj</th>
+          <th class='border border-gray-600 px-4 py-2'>Value</th>
+          <th class='border border-gray-600 px-4 py-2'>Ownership</th>
+          <th class='border border-gray-600 px-4 py-2'>Status</th>
+          <th class='border border-gray-600 px-4 py-2'>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @players.each do |player| %>
+          <tr data-player-id="player-pool-entry-form-<%= player.id %>">
+            <%= render partial: 'players/player_row', locals: { player_pool: @player_pool, player: player } %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <div class="my-4">
+      <div class='px-8 py-16 h-screen'>
+        <canvas id='projection-bar-chart'></canvas>
+        <script>
+          var context = document.getElementById('projection-bar-chart');
+          new Chart(context, {
+            type: 'horizontalBar',
+            data: <%= projection_bar_data(@players) %>,
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              legend: {
+                  display: false
+              },
+            }
+          });
+        </script>
+      </div>
+      <div class='px-8 py-16 h-screen'>
+        <canvas id='value-ownership-scatter-chart'></canvas>
+        <script>
+          var context = document.getElementById('value-ownership-scatter-chart');
+          new Chart(context, {
+            type: 'scatter',
+            data: <%= value_by_projection_scatter_data(@players) %>,
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              legend: {
+                  display: false
+              },
+              tooltips: {
+                 callbacks: {
+                    label: function(tooltipItem, data) {
+                       var label = data.labels[tooltipItem.index];
+                       return label + ': (' + tooltipItem.xLabel + 'x, ' + tooltipItem.yLabel + '%)';
+                    }
+                 }
+              }
+            }
+          });
+        </script>
+      </div>
     </div>
   </div>
 </div>

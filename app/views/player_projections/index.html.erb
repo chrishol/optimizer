@@ -27,9 +27,7 @@
           <th class='border border-gray-600 px-4 py-2'>Team</th>
           <th class='border border-gray-600 px-4 py-2'>vs.</th>
           <th class='border border-gray-600 px-4 py-2'>Price</th>
-          <th class='border border-gray-600 px-4 py-2'>Proj</th>
-          <th class='border border-gray-600 px-4 py-2'>Value</th>
-          <th class='border border-gray-600 px-4 py-2'>Ownership</th>
+
         </tr>
       </thead>
       <tbody>
@@ -43,55 +41,10 @@
             <%= player.opponent.upcase %>
           </td>
           <td class='border border-gray-500 px-4 py-2'><%= player.price %></td>
-          <td class='border border-gray-500 px-4 py-2'><%= player.projections.first.projection %></td>
-          <td class='border border-gray-500 px-4 py-2'><%= player.projections.first.projected_value %>x</td>
-          <td class='border border-gray-500 px-4 py-2'><%= player.projections.first.projected_ownership %>%</td>
+
         </tr>
         <% end %>
       </tbody>
     </table>
-
-    <div class='px-8 py-16 h-screen'>
-      <canvas id='projection-bar-chart'></canvas>
-      <script>
-        var context = document.getElementById('projection-bar-chart');
-        new Chart(context, {
-          type: 'horizontalBar',
-          data: <%= projection_bar_data(@players) %>,
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            legend: {
-                display: false
-            },
-          }
-        });
-      </script>
-    </div>
-    <div class='px-8 py-16 h-screen'>
-      <canvas id='value-ownership-scatter-chart'></canvas>
-      <script>
-        var context = document.getElementById('value-ownership-scatter-chart');
-        new Chart(context, {
-          type: 'scatter',
-          data: <%= value_by_projection_scatter_data(@players) %>,
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            legend: {
-                display: false
-            },
-            tooltips: {
-               callbacks: {
-                  label: function(tooltipItem, data) {
-                     var label = data.labels[tooltipItem.index];
-                     return label + ': (' + tooltipItem.xLabel + 'x, ' + tooltipItem.yLabel + '%)';
-                  }
-               }
-            }
-          }
-        });
-      </script>
-    </div>
   </div>
 </div>

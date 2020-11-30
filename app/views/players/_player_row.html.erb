@@ -7,5 +7,8 @@
   <%= player.opponent.upcase %>
 </td>
 <td class='border border-gray-500 px-4 py-2'><%= player.price %></td>
+<td class='border border-gray-500 px-4 py-2'><%= player.projections.first.projection %></td>
+<td class='border border-gray-500 px-4 py-2'><%= player.projections.first.projected_value %>x</td>
+<td class='border border-gray-500 px-4 py-2'><%= player.projections.first.projected_ownership %>%</td>
 <%= render partial: 'players/player_pool_actions',
            locals: { entry: player_pool_entry_for(player_pool, player) } %>
