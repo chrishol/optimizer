@@ -1,20 +1,20 @@
-<td class='border border-gray-500 px-4 py-2 text-center'>
+<td class='text-sm px-6 py-1 whitespace-nowrap'>
   <% if entry.is_locked %>
     🔒 Locked
   <% else %>
     In Pool
   <% end %>
 </td>
-<td class='border border-gray-500 px-4 py-2 text-center'>
+<td class='text-sm px-6 py-1 whitespace-nowrap'>
   <div class='flex justify-center space-x-1'>
     <%= form_with url: player_pool_entry_path(entry.id),
                   html: { method: :delete },
-                  remote: true do |f| %>
+                  local: true do |f| %>
       <%= f.submit "-", class: "h-8 w-8 rounded bg-purple-800 text-white text-center align-middle font-black" %>
     <% end %>
 
     <%= form_with model: entry,
-                  remote: true do |f| %>
+                  local: true do |f| %>
       <%= f.hidden_field :is_locked, value: !entry.is_locked %>
       <%= f.submit (entry.is_locked ? 'U' : 'L'),
                    class: "h-8 w-8 rounded bg-yellow-700 text-white text-center align-middle font-black" %>

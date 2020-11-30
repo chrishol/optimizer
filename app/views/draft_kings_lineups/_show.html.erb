@@ -2,8 +2,8 @@
   <div class="table-row-group">
     <% lineup.players.each do |player| %>
       <div class="table-row">
-        <div class="table-cell bg-gray-200 text-gray-700 w-12 p-2 text-sm text-center">
-          <%= player.position.upcase %>
+        <div class="table-cell bg-gray-200 text-gray-700 w-12 p-2 text-sm text-center uppercase">
+          <%= player.position %>
         </div>
         <div class="table-cell bg-gray-100 text-gray-700 w-40 p-2 text-sm">
           <%= player.name %>

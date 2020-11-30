@@ -1,14 +1,14 @@
 
-<td class='border border-gray-500 px-4 py-2'><%= player.position.upcase %></td>
-<td class='border border-gray-500 px-4 py-2'><%= player.name %></td>
-<td class='border border-gray-500 px-4 py-2'><%= player.team.upcase %></td>
-<td class='border border-gray-500 px-4 py-2'>
+<td class='text-sm px-6 py-1 whitespace-nowrap uppercase'><%= player.position %></td>
+<td class='text-sm px-6 py-1 whitespace-nowrap'><%= player.name %></td>
+<td class='text-sm px-6 py-1 whitespace-nowrap'>
+  <span class='uppercase'><%= player.team %></span>
   <%= game_venue_symbol(player) %>
-  <%= player.opponent.upcase %>
+  <span class='uppercase'><%= player.opponent %></span>
 </td>
-<td class='border border-gray-500 px-4 py-2'><%= player.price %></td>
-<td class='border border-gray-500 px-4 py-2'><%= player.projections.first.projection %></td>
-<td class='border border-gray-500 px-4 py-2'><%= player.projections.first.projected_value %>x</td>
-<td class='border border-gray-500 px-4 py-2'><%= player.projections.first.projected_ownership %>%</td>
+<td class='text-sm px-6 py-1 whitespace-nowrap'><%= player.price %></td>
+<td class='text-sm px-6 py-1 whitespace-nowrap'><%= player.projections.first.projection %></td>
+<td class='text-sm px-6 py-1 whitespace-nowrap'><%= player.projections.first.projected_value %>x</td>
+<td class='text-sm px-6 py-1 whitespace-nowrap'><%= player.projections.first.projected_ownership %>%</td>
 <%= render partial: 'players/player_pool_actions',
            locals: { entry: player_pool_entry_for(player_pool, player) } %>

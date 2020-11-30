@@ -1,0 +1,20 @@
+<h3 class="text-sm font-bold text-gray-400 mb-2">
+  PLAYER POOL
+</h3>
+
+<div class="flex flex-row flex-wrap -mx-2">
+  <% player_pool.player_pool_entries.each do |entry| %>
+    <div class="inline-flex space-x-0 items-center rounded-lg shadow w-48 h-6 mx-2 my-1">
+      <div class="flex flex-none items-center justify-center w-1/5 h-full bg-gray-700 rounded-l-lg">
+        <span class="text-white text-xs font-bold uppercase">
+          <%= entry.player.position %>
+        </span>
+      </div>
+      <div class="flex flex-none items-center w-4/5 h-full rounded-r-lg px-2 border-gray-100">
+        <span class="text-gray-900 text-sm">
+          <%= entry.player.name %>
+        <span>
+      </div>
+    </div>
+  <% end %>
+</div>

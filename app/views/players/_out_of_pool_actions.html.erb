@@ -1,15 +1,15 @@
-<td class='border border-gray-500 px-4 py-2 text-center'></td>
-<td class='border border-gray-500 px-4 py-2 text-center'>
+<td class='text-sm px-6 py-1 whitespace-nowrap'></td>
+<td class='text-sm px-6 py-1 whitespace-nowrap'>
   <div class='flex justify-center space-x-1'>
     <%= form_with url: player_pool_entries_path,
-                  remote: true do |f| %>
+                  local: true do |f| %>
       <%= hidden_field_tag 'player_pool_entry[player_pool_id]', entry.player_pool_id %>
       <%= hidden_field_tag 'player_pool_entry[player_id]', entry.player_id %>
       <%= f.submit "+", class: "h-8 w-8 pxauto rounded bg-grey-800 text-white text-center align-middle font-black" %>
     <% end %>
 
     <%= form_with url: player_pool_entries_path,
-                  remote: true do |f| %>
+                  local: true do |f| %>
       <%= hidden_field_tag 'player_pool_entry[player_pool_id]', entry.player_pool_id %>
       <%= hidden_field_tag 'player_pool_entry[player_id]', entry.player_id %>
       <%= hidden_field_tag 'player_pool_entry[is_excluded]', true %>

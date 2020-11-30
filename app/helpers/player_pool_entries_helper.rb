@@ -1,2 +1,0 @@
-module PlayerPoolEntriesHelper
-end

@@ -1,0 +1,73 @@
+<% content_for :sub_navigation do %>
+  <%= render partial: 'navigation/dfs_sub_nav' %>
+<% end %>
+
+<div class='flex flex-col min-h-screen mt-4'>
+  <div class='flex-none bg-white'>
+    <div class="inline-flex space-x-0 items-center rounded-lg shadow mb-2">
+      <%= link_to 'All',
+                  params.permit(:position).merge(position: nil),
+                  class:"py-2 px-6 hover:bg-gray-200 rounded-l-lg border border-gray-200 text-gray-700 text-sm" %>
+      <% Player::PLAYER_POSITIONS.each do |position| %>
+        <%= link_to position,
+                    params.permit(:position).merge(position: position),
+                    class: "#{'bg-gray-100' if position == params[:position]}
+                            #{'rounded-r-lg' if position == 'dst'}
+                            py-2 px-6 hover:bg-gray-200 border border-gray-200 text-gray-700 text-sm uppercase" %>
+      <% end %>
+    </div>
+
+    <div class="my-4 min-h-screen">
+      <h3 class="text-sm font-bold text-gray-400 my-2">
+        POINT PROJECTIONS
+      </h3>
+      <canvas id='projection-bar-chart'></canvas>
+      <script>
+        var context = document.getElementById('projection-bar-chart');
+        new Chart(context, {
+          type: 'horizontalBar',
+          data: <%= projection_bar_data(@players) %>,
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+                display: false
+            },
+          }
+        });
+      </script>
+    </div>
+
+    <div class='my-4 min-h-screen'>
+      <h3 class="text-sm font-bold text-gray-400 my-2">
+        VALUE x OWNERSHIP
+      </h3>
+      <canvas id='value-ownership-scatter-chart'></canvas>
+      <script>
+        var context = document.getElementById('value-ownership-scatter-chart');
+        new Chart(context, {
+          type: 'scatter',
+          data: <%= value_by_projection_scatter_data(@players) %>,
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+                display: false
+            },
+            tooltips: {
+               callbacks: {
+                  label: function(tooltipItem, data) {
+                     var label = data.labels[tooltipItem.index];
+                     return label + ': (' + tooltipItem.xLabel + 'x, ' + tooltipItem.yLabel + '%)';
+                  }
+               }
+            }
+          }
+        });
+      </script>
+    </div>
+  </div>
+</div>
+
+<div id='ac-player-pool' data-player-pool-id='<%= @player_pool.id %>' class='hidden'>
+</div>

@@ -12,7 +12,13 @@
 
   <body class='bg-gray-200'>
     <div class='lg:container mx-auto bg-white'>
-      <%= yield %>
+      <%= render partial: 'navigation/main_nav' %>
+      <%= yield :sub_navigation %>
+      <main>
+        <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+          <%= yield %>
+        </div>
+      </main>
     </div>
   </body>
 </html>
