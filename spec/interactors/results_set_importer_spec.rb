@@ -4,6 +4,7 @@ describe ResultsSetImporter do
   describe "import_csv" do
     let(:tmp_filepath) { './tmp/spec/contest_results.csv' }
     let(:gameweek) { create(:gameweek) }
+
     let!(:dalvin_cook) { create(:player, gameweek: gameweek, name: 'Dalvin Cook') }
     let!(:nyheim_hines) { create(:player, gameweek: gameweek, name: 'Nyheim Hines') }
     let!(:brian_hill) { create(:player, gameweek: gameweek, name: 'Brian Hill') }
@@ -60,11 +61,11 @@ describe ResultsSetImporter do
       }.to change(PlayerResult, :count).from(0).to(3)
     end
 
-    # it 'creates result lineups rows for each player' do
-    #   expect {
-    #     described_class.new(gameweek, slate_name, slate_type).import_csv(tmp_filepath)
-    #   }.to change(DraftKingsLineup, :count).from(0).to(3)
-    # end
+    it 'creates entered lineups rows for each player' do
+      expect {
+        described_class.new(gameweek, slate_name, slate_type).import_csv(tmp_filepath)
+      }.to change(EnteredLineup, :count).from(0).to(3)
+    end
 
     describe 'imported result fields' do
       let(:results_set) { ResultsSet.last }
@@ -104,64 +105,54 @@ describe ResultsSetImporter do
         it { expect(player_result.ownership).to eq 32.27 }
         it { expect(player_result.points).to eq 5.5 }
       end
-    end
 
-    # describe 'idempotency' do
-    #   let(:tmp_filepath2) { './tmp/etr_projections_updated.csv' }
-    #
-    #   before do
-    #     described_class.new(gameweek).import_csv(tmp_filepath)
-    #
-    #     File.open(tmp_filepath2, 'w') do |f|
-    #       f << "\"Player\",\"Team\",\"Opponent\",\"DK Position\",\"DK Salary\",\"DK Projection\",\"DK Value\",\"DK Ownership\",\"DKSlateID\"\n"
-    #       f << "\"Mike Davis\",\"CAR\",\"TB\",\"RB\",\"$4000\",\"21.5\",\"7.1\",\"53%\",\"15751496\"\n"
-    #       f << "\"Aaron Jones\",\"GB\",\"JAX\",\"RB\",\"$7100\",\"20.1\",\"3.5\",\"22%\",\"15751412\"\n"
-    #     end
-    #   end
-    #
-    #   it 'is idempotent wrt projection sets' do
-    #     expect {
-    #       described_class.new(gameweek).import_csv(tmp_filepath2)
-    #     }.not_to change(ProjectionSet, :count).from(1)
-    #   end
-    #
-    #   it 'is idempotent wrt projections' do
-    #     expect {
-    #       described_class.new(gameweek).import_csv(tmp_filepath2)
-    #     }.not_to change(Projection, :count).from(2)
-    #   end
-    #
-    #   describe 'updating existing records' do
-    #     before do
-    #       described_class.new(gameweek).import_csv(tmp_filepath2)
-    #     end
-    #
-    #     let(:projection_set) { ProjectionSet.last }
-    #
-    #     describe 'first row' do
-    #       subject(:projection) do
-    #         Projection.find_by_player_id(mike_davis.id)
-    #       end
-    #
-    #       it { expect(projection.projection).to eq 21.5 }
-    #       it { expect(projection.projected_value).to eq 7.1 }
-    #       it { expect(projection.projected_ownership).to eq 53 }
-    #       it { expect(projection.player).to eq mike_davis }
-    #       it { expect(projection.projection_set).to eq projection_set }
-    #     end
-    #
-    #     describe 'second row' do
-    #       subject(:projection) do
-    #         Projection.find_by_player_id(aaron_jones.id)
-    #       end
-    #
-    #       it { expect(projection.projection).to eq 20.1 }
-    #       it { expect(projection.projected_value).to eq 3.5 }
-    #       it { expect(projection.projected_ownership).to eq 22 }
-    #       it { expect(projection.player).to eq aaron_jones }
-    #       it { expect(projection.projection_set).to eq projection_set }
-    #     end
-    #   end
-    # end
+      describe 'first entered lineup row' do
+        subject(:entered_lineup) do
+          EnteredLineup.find_by_entry_id('1234567890')
+        end
+
+        it { expect(entered_lineup.slate_rank).to eq 1 }
+        it { expect(entered_lineup.points).to eq 242.68 }
+        it { expect(entered_lineup.entry_name).to eq 'abc12340' }
+        it do
+          expect(entered_lineup.players).to match_array([
+            pat_mahomes, the_big_dog, nyheim_hines, brian_hill, tyreek_hill,
+            devante_parker, jarvis_landry, kyle_rudolph, saints_dst
+          ])
+        end
+      end
+
+      describe 'second entered lineup row' do
+        subject(:entered_lineup) do
+          EnteredLineup.find_by_entry_id('1234567891')
+        end
+
+        it { expect(entered_lineup.slate_rank).to eq 2 }
+        it { expect(entered_lineup.points).to eq 242.38 }
+        it { expect(entered_lineup.entry_name).to eq 'abc12341' }
+        it do
+          expect(entered_lineup.players).to match_array([
+            fitz, the_big_dog, nick_chubb, nyheim_hines, tyreek_hill,
+            jarvis_landry, keelan_cole, evan_engram, saints_dst
+          ])
+        end
+      end
+
+      describe 'third entered lineup row' do
+        subject(:entered_lineup) do
+          EnteredLineup.find_by_entry_id('1234567892')
+        end
+
+        it { expect(entered_lineup.slate_rank).to eq 3 }
+        it { expect(entered_lineup.points).to eq 238.68 }
+        it { expect(entered_lineup.entry_name).to eq 'abc12342' }
+        it do
+          expect(entered_lineup.players).to match_array([
+            kirk_cousins, the_big_dog, kareem_hunt, tyreek_hill, justin_jefferson,
+            robby_anderson, curtis_samuel, kyle_rudolph, falcons_dst
+          ])
+        end
+      end
+    end
   end
 end

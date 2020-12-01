@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_01_014443) do
+ActiveRecord::Schema.define(version: 2020_12_01_052921) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 2020_12_01_014443) do
     t.decimal "points", precision: 5, scale: 2, default: "0.0"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "entry_id", null: false
     t.index ["results_set_id"], name: "index_entered_lineups_on_results_set_id"
   end
 

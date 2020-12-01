@@ -1,9 +1,5 @@
 # New Feature List
 
-### App Design
-
-- Nav bar elements selected based on path
-
 ### General
 
 - Authentication
@@ -12,7 +8,6 @@
 
 - Show increase/decrease from previous gameweek
 
-- Import actual scores (DraftKings history export)
 - Chart actual value versus actual ownership
 - Chart actual scores
 
