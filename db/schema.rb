@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_01_001915) do
+ActiveRecord::Schema.define(version: 2020_12_01_014443) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,23 @@ ActiveRecord::Schema.define(version: 2020_12_01_001915) do
     "cash",
     "gpp",
   ], force: :cascade
+
+  create_table "entered_lineups", force: :cascade do |t|
+    t.bigint "results_set_id", null: false
+    t.integer "slate_rank", null: false
+    t.string "entry_name", null: false
+    t.decimal "points", precision: 5, scale: 2, default: "0.0"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["results_set_id"], name: "index_entered_lineups_on_results_set_id"
+  end
+
+  create_table "entered_lineups_players", id: false, force: :cascade do |t|
+    t.bigint "entered_lineup_id", null: false
+    t.bigint "player_id", null: false
+    t.index ["entered_lineup_id"], name: "index_entered_lineups_players_on_entered_lineup_id"
+    t.index ["player_id"], name: "index_entered_lineups_players_on_player_id"
+  end
 
   create_table "gameweeks", force: :cascade do |t|
     t.integer "season", null: false
@@ -158,6 +175,9 @@ ActiveRecord::Schema.define(version: 2020_12_01_001915) do
     t.index ["gameweek_id"], name: "index_scheduled_games_on_gameweek_id"
   end
 
+  add_foreign_key "entered_lineups", "results_sets"
+  add_foreign_key "entered_lineups_players", "entered_lineups"
+  add_foreign_key "entered_lineups_players", "players"
   add_foreign_key "player_pool_entries", "player_pools"
   add_foreign_key "player_pool_entries", "players"
   add_foreign_key "player_pools", "gameweeks"
