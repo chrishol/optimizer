@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_29_043833) do
+ActiveRecord::Schema.define(version: 2020_12_01_001915) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,6 +64,11 @@ ActiveRecord::Schema.define(version: 2020_11_29_043833) do
     "dst",
   ], force: :cascade
 
+  create_enum :slate_type, [
+    "cash",
+    "gpp",
+  ], force: :cascade
+
   create_table "gameweeks", force: :cascade do |t|
     t.integer "season", null: false
     t.integer "week_number", null: false
@@ -87,6 +92,17 @@ ActiveRecord::Schema.define(version: 2020_11_29_043833) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["gameweek_id"], name: "index_player_pools_on_gameweek_id"
+  end
+
+  create_table "player_results", force: :cascade do |t|
+    t.bigint "results_set_id", null: false
+    t.bigint "player_id", null: false
+    t.decimal "ownership", precision: 5, scale: 2, default: "0.0"
+    t.decimal "points", precision: 5, scale: 2, default: "0.0"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["player_id"], name: "index_player_results_on_player_id"
+    t.index ["results_set_id"], name: "index_player_results_on_results_set_id"
   end
 
   create_table "players", force: :cascade do |t|
@@ -123,6 +139,15 @@ ActiveRecord::Schema.define(version: 2020_11_29_043833) do
     t.index ["projection_set_id"], name: "index_projections_on_projection_set_id"
   end
 
+  create_table "results_sets", force: :cascade do |t|
+    t.bigint "gameweek_id", null: false
+    t.string "slate_name", null: false
+    t.enum "slate_type", null: false, enum_name: "slate_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["gameweek_id"], name: "index_results_sets_on_gameweek_id"
+  end
+
   create_table "scheduled_games", force: :cascade do |t|
     t.bigint "gameweek_id", null: false
     t.datetime "start_time", null: false
@@ -136,9 +161,12 @@ ActiveRecord::Schema.define(version: 2020_11_29_043833) do
   add_foreign_key "player_pool_entries", "player_pools"
   add_foreign_key "player_pool_entries", "players"
   add_foreign_key "player_pools", "gameweeks"
+  add_foreign_key "player_results", "players"
+  add_foreign_key "player_results", "results_sets"
   add_foreign_key "players", "gameweeks"
   add_foreign_key "projection_sets", "gameweeks"
   add_foreign_key "projections", "players"
   add_foreign_key "projections", "projection_sets"
+  add_foreign_key "results_sets", "gameweeks"
   add_foreign_key "scheduled_games", "gameweeks"
 end

@@ -6,6 +6,7 @@ class Player < ApplicationRecord
   belongs_to :gameweek
   has_many :player_pool_entries
   has_many :projections
+  has_many :player_results
 
   validates_presence_of :dk_id, :name, :team, :opponent, :price, :position
   validates_inclusion_of :team, :opponent, in: ScheduledGame::NFL_TEAMS
