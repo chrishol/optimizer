@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :player do
     gameweek
-    dk_id { 15642452 }
+    dk_id { 15_000_001 }
     name { 'Davante Adams' }
     team  { 'gb' }
     opponent { 'hou' }

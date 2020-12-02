@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_01_052921) do
+ActiveRecord::Schema.define(version: 2020_12_02_053111) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -134,6 +134,7 @@ ActiveRecord::Schema.define(version: 2020_12_01_052921) do
     t.enum "position", null: false, enum_name: "player_position"
     t.integer "dk_id", null: false
     t.enum "game_venue", default: "neutral", null: false, enum_name: "game_venue"
+    t.integer "previous_price"
     t.index ["gameweek_id"], name: "index_players_on_gameweek_id"
   end
 

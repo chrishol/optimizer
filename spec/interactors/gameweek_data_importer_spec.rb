@@ -21,6 +21,8 @@ describe GameweekDataImporter do
 
     describe 'imported fields' do
       let(:opponent_finder) { instance_double(OpponentFinder) }
+      let(:game_venue) { 'home' }
+      let(:opponent) { 'pit' }
 
       before do
         allow(OpponentFinder).to receive(:new).with(gameweek).and_return(opponent_finder)
@@ -33,9 +35,6 @@ describe GameweekDataImporter do
           described_class.new(gameweek).import_csv(tmp_filepath)
           Player.find_by_dk_id(15642242)
         end
-
-        let(:game_venue) { 'home' }
-        let(:opponent) { 'pit' }
 
         it { expect(player.name).to eq 'Christian McCaffrey' }
         it { expect(player.position).to eq 'rb' }
@@ -62,6 +61,50 @@ describe GameweekDataImporter do
         it { expect(player.game_venue).to eq game_venue }
         it { expect(player.price).to eq 8_200 }
         it { expect(player.gameweek).to eq gameweek }
+      end
+
+      describe 'price changes' do
+        subject(:new_player) do
+          described_class.new(gameweek).import_csv(tmp_filepath)
+          Player.find_by_dk_id(15642242)
+        end
+
+        context 'when there is a previous gameweek' do
+          let(:gameweek) { create(:gameweek, season: 2020, week_number: 5) }
+          let!(:previous_gameweek) { create(:gameweek, season: 2020, week_number: 4) }
+
+          context 'when there is a previous player entry' do
+            before do
+              create(
+                :player,
+                gameweek: previous_gameweek,
+                dk_id: 15000000,
+                name: 'Christian McCaffrey',
+                position: 'rb',
+                team: 'car',
+                price: 9_800
+              )
+            end
+
+            it 'sets the previous_price' do
+              expect(new_player.previous_price).to eq(9_800)
+            end
+          end
+
+          context 'when there is not a previous player entry' do
+            it 'does not set the previous_price' do
+              expect(new_player.previous_price).to be_nil
+            end
+          end
+        end
+
+        context 'when there is not a previous gameweek' do
+          let(:gameweek) { create(:gameweek, season: 2020, week_number: 1) }
+
+          it 'does not set the previous_price' do
+            expect(new_player.previous_price).to be_nil
+          end
+        end
       end
     end
   end
