@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     resources :results_sets, only: %w(index show)
   end
 
+  resources :players, only: %w(show)
+
   resources :player_pool_entries, only: %w(create update destroy)
 
   resources :lineup_generations, only: %w(create)

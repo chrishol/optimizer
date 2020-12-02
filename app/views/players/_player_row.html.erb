@@ -6,7 +6,12 @@
   <%= game_venue_symbol(player) %>
   <span class='uppercase'><%= player.opponent %></span>
 </td>
-<td class='text-sm px-6 py-1 whitespace-nowrap'><%= player.price %></td>
+<td class='text-sm px-6 py-1 whitespace-nowrap'>
+  <%= link_to player_path(player) do %>
+    <%= player.price %>
+  <% end %>
+  <%= price_change(player) %>
+</td>
 <td class='text-sm px-6 py-1 whitespace-nowrap'><%= player.projections.first.projection %></td>
 <td class='text-sm px-6 py-1 whitespace-nowrap'><%= player.projections.first.projected_value %>x</td>
 <td class='text-sm px-6 py-1 whitespace-nowrap'><%= player.projections.first.projected_ownership %>%</td>

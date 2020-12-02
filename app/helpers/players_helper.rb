@@ -14,4 +14,37 @@ module PlayersHelper
       ''
     end
   end
+
+  def price_change(player)
+    return unless player.previous_price.present?
+
+    price_change = player.price - player.previous_price
+    return if price_change.zero?
+
+    classes = %w(pl-2)
+    if price_change.positive?
+      classes << 'text-green-400'
+      symbol = '↑'
+    else
+      classes << 'text-red-400'
+      symbol = '↓'
+    end
+
+    "<span class='#{classes.join(' ')}'>#{symbol} #{price_change.abs}</span>".html_safe
+  end
+
+  def player_line_data(all_player_entries)
+    {
+      labels: all_player_entries.map(&:gameweek).map(&:week_number),
+      datasets: [{
+        data: all_player_entries.map(&:price)
+      }]
+    }.to_json.html_safe
+  end
+
+  def fantasy_data_link_url(player)
+    uri = URI('https://duckduckgo.com/')
+    uri.query = URI.encode_www_form({ 'q' => "!ducky #{player.name} fantasydata"})
+    uri.to_s
+  end
 end
