@@ -1,0 +1,13 @@
+<% content_for :sub_navigation do %>
+  <%= render partial: 'navigation/dfs_sub_nav' %>
+<% end %>
+
+<div class='flex flex-col min-h-screen mt-4'>
+  <div class='flex-none bg-white'>
+    <!-- TODO: Insert content -->
+    <%= render partial: 'results_set_picker' %>
+  </div>
+</div>
+
+<div id='ac-player-pool' data-player-pool-id='<%= @player_pool.id %>' class='hidden'>
+</div>

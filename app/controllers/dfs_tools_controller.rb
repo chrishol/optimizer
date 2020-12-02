@@ -17,4 +17,8 @@ class DfsToolsController < ApplicationController
   def load_navigable_gameweeks
     @navigable_gameweeks = Gameweek.all.order('season ASC, week_number ASC')
   end
+
+  def filter_params_valid?
+    Player::PLAYER_POSITIONS.include?(params[:position])
+  end
 end

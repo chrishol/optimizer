@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resources :players, only: %w(index)
     resources :projection_charts, only: %w(index)
     resources :optimizer_tools, only: %w(index)
+    resources :results_sets, only: %w(index show)
   end
 
   resources :player_pool_entries, only: %w(create update destroy)

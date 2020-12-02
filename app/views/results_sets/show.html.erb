@@ -4,6 +4,8 @@
 
 <div class='flex flex-col min-h-screen mt-4'>
   <div class='flex-none bg-white'>
+    <%= render partial: 'results_set_picker' %>
+
     <div class="inline-flex space-x-0 items-center rounded-lg shadow mb-2">
       <%= link_to 'All',
                   params.permit(:position).merge(position: nil),
@@ -17,32 +19,40 @@
       <% end %>
     </div>
 
-    <div class="py-2">
+    <div class='py-4'>
       <h3 class="text-sm font-bold text-gray-400 my-2">
-        POINT PROJECTIONS
+        POINTS x OWNERSHIP
       </h3>
       <div class='h-128'>
-        <canvas id='projection-bar-chart'></canvas>
+        <canvas id='points-ownership-scatter-chart'></canvas>
         <script>
-          var context = document.getElementById('projection-bar-chart');
+          var context = document.getElementById('points-ownership-scatter-chart');
           new Chart(context, {
-            type: 'horizontalBar',
-            data: <%= projection_bar_data(@players) %>,
+            type: 'scatter',
+            data: <%= points_by_ownership_scatter_data(@results) %>,
             options: {
               responsive: true,
               maintainAspectRatio: false,
               legend: {
                   display: false
               },
+              tooltips: {
+                 callbacks: {
+                    label: function(tooltipItem, data) {
+                       var label = data.labels[tooltipItem.index];
+                       return label + ': (' + tooltipItem.xLabel + ' fpts, ' + tooltipItem.yLabel + '%)';
+                    }
+                 }
+              }
             }
           });
         </script>
       </div>
     </div>
 
-    <div class='py-2'>
+    <div class='py-8'>
       <h3 class="text-sm font-bold text-gray-400 my-2">
-        ETR VALUE x OWNERSHIP
+        VALUE x OWNERSHIP
       </h3>
       <div class='h-128'>
         <canvas id='value-ownership-scatter-chart'></canvas>
@@ -50,7 +60,7 @@
           var context = document.getElementById('value-ownership-scatter-chart');
           new Chart(context, {
             type: 'scatter',
-            data: <%= value_by_projection_scatter_data(@players) %>,
+            data: <%= value_by_ownership_scatter_data(@results) %>,
             options: {
               responsive: true,
               maintainAspectRatio: false,

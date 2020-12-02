@@ -8,14 +8,9 @@
 
 - Show increase/decrease from previous gameweek
 
-- Chart actual value versus actual ownership
-- Chart actual scores
+- Show winning lineups and those of specific fantasy pros
 
-- Display projected value on lineups
-- Refactor main players view to be a player pool view; player pool on left ~1/3; results on right ~2/3
-- Optimize player pool button (to call CBC optimizer)
-- Optimize gameweek button
-- Add header on right hand side to display which results are being shown
+- Add header to display which results are being shown
 - Figure out what to do with "lineup finder" and "swap finder" features
 
 ### Survivor

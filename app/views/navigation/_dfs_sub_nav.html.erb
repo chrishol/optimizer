@@ -34,7 +34,14 @@
           <% end %>
           <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-800 hover:bg-gray-100">Lineups</a>
           <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-800 hover:bg-gray-100">Swaps</a>
-          <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-800 hover:bg-gray-100">Results</a>
+          <%= link_to_unless_current(
+                'Results',
+                gameweek_results_sets_path(@gameweek),
+                class: 'px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-800 hover:bg-gray-100') do %>
+            <span class='px-3 py-2 rounded-md text-sm font-medium text-gray-900 bg-gray-200'>
+              Results
+            </span>
+          <% end %>
         </div>
       </div>
     </div>
@@ -61,10 +68,10 @@
           From: "transform opacity-100 scale-100"
           To: "transform opacity-0 scale-95"
       -->
-      <div id='gameweek-options-panel' class="hidden origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+      <div id='gameweek-options-panel' class="hidden origin-top-right absolute right-0 mt-2 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
         <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="gameweek-options-menu">
           <% @navigable_gameweeks.each do |nav_gameweek| %>
-            <%= link_to params.permit(:gameweek_id).merge(gameweek_id: nav_gameweek.id),
+            <%= link_to params.permit(:results_set_id, :gameweek_id).merge(results_set_id: nil, gameweek_id: nav_gameweek.id),
                         class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900",
                         role: "menuitem" do %>
               Week <%= nav_gameweek.week_number %>
