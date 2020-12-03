@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   mount ActionCable.server, at: '/cable'
 
+  root to: "marketing_pages#index"
+
   resources :gameweeks, only: %w(index) do
     resources :players, only: %w(index)
     resources :projection_charts, only: %w(index)
