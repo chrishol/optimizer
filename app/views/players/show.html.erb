@@ -60,5 +60,74 @@
         </script>
       </div>
     </div>
+
+    <div class="py-2">
+      <h3 class="text-sm font-bold text-gray-400 my-2">
+        PLAYER DK POINTS HISTORY
+      </h3>
+      <div class='h-128'>
+        <canvas id='player-points-bar-chart'></canvas>
+        <script>
+          var context = document.getElementById('player-points-bar-chart');
+          new Chart(context, {
+            type: 'bar',
+            data: <%= player_points_bar_data(@player_results_gpp) %>,
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              legend: {
+                  display: false
+              },
+            }
+          });
+        </script>
+      </div>
+    </div>
+
+    <div class="py-2">
+      <h3 class="text-sm font-bold text-gray-400 my-2">
+        PLAYER CASH OWNERSHIP
+      </h3>
+      <div class='h-128'>
+        <canvas id='player-cash-bar-chart'></canvas>
+        <script>
+          var context = document.getElementById('player-cash-bar-chart');
+          new Chart(context, {
+            type: 'bar',
+            data: <%= player_ownership_bar_data(@player_results_cash) %>,
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              legend: {
+                  display: false
+              },
+            }
+          });
+        </script>
+      </div>
+    </div>
+
+    <div class="py-2">
+      <h3 class="text-sm font-bold text-gray-400 my-2">
+        PLAYER GPP OWNERSHIP
+      </h3>
+      <div class='h-128'>
+        <canvas id='player-gpp-bar-chart'></canvas>
+        <script>
+          var context = document.getElementById('player-gpp-bar-chart');
+          new Chart(context, {
+            type: 'bar',
+            data: <%= player_ownership_bar_data(@player_results_gpp) %>,
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              legend: {
+                  display: false
+              },
+            }
+          });
+        </script>
+      </div>
+    </div>
   </div>
 </div>

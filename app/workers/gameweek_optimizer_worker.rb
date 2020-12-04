@@ -1,5 +1,5 @@
 class GameweekOptimizerWorker
-  # include Sidekiq::Worker
+  include Sidekiq::Worker
 
   def perform(gameweek_id, player_pool_id, projection_set_id, number_of_lineups)
     gameweek = Gameweek.find(gameweek_id)

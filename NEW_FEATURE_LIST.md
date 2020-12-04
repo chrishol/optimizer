@@ -6,8 +6,6 @@
 
 ### DFS
 
-- Show increase/decrease from previous gameweek
-
 - Show winning lineups and those of specific fantasy pros
 
 - Add header to display which results are being shown

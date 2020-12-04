@@ -42,6 +42,24 @@ module PlayersHelper
     }.to_json.html_safe
   end
 
+  def player_points_bar_data(player_results)
+    {
+      labels: player_results.map(&:results_set).map(&:gameweek).map(&:week_number),
+      datasets: [{
+        data: player_results.map(&:points)
+      }]
+    }.to_json.html_safe
+  end
+
+  def player_ownership_bar_data(player_results)
+    {
+      labels: player_results.map(&:results_set).map(&:gameweek).map(&:week_number),
+      datasets: [{
+        data: player_results.map(&:ownership)
+      }]
+    }.to_json.html_safe
+  end
+
   def fantasy_data_link_url(player)
     uri = URI('https://duckduckgo.com/')
     uri.query = URI.encode_www_form({ 'q' => "!ducky #{player.name} fantasydata"})

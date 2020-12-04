@@ -18,11 +18,21 @@ class PlayersController < DfsToolsController
       team: @player.team,
       position: @player.position
     ).joins(:gameweek).order('gameweeks.week_number ASC')
+
+    @player_results_cash = player_results('cash')
+    @player_results_gpp = player_results('gpp')
   end
 
   private
 
   def filter_params_valid?
     Player::PLAYER_POSITIONS.include?(params[:position])
+  end
+
+  def player_results(slate_type)
+    PlayerResult.joins(:results_set).joins(:player).joins(player: :gameweek).where(
+      players: { id: @all_player_entries.map(&:id) },
+      results_sets: { slate_type: slate_type }
+    ).order('gameweeks.week_number ASC')
   end
 end
