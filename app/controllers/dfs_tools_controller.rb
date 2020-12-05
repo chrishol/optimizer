@@ -10,8 +10,16 @@ class DfsToolsController < ApplicationController
   end
 
   def load_player_pool
-    @player_pool = PlayerPool.where(gameweek: gameweek).first_or_create
-    @player_pool.player_pool_entries.includes(:player)
+    @player_pool = PlayerPool.where(gameweek: gameweek)
+                             .includes(player_pool_entries: :player)
+                             .first || PlayerPool.create(gameweek: gameweek)
+  end
+
+  def load_projection_set
+    @projection_set = gameweek.projection_sets
+                              .includes(:projections)
+                              .where(projection_sets: { source: 'Establish the Run' })
+                              .first
   end
 
   def load_navigable_gameweeks

@@ -12,8 +12,8 @@
   <% end %>
   <%= price_change(player) %>
 </td>
-<td class='text-sm px-6 py-1 whitespace-nowrap'><%= player.projections.first.projection %></td>
-<td class='text-sm px-6 py-1 whitespace-nowrap'><%= player.projections.first.projected_value %>x</td>
-<td class='text-sm px-6 py-1 whitespace-nowrap'><%= player.projections.first.projected_ownership %>%</td>
+<td class='text-sm px-6 py-1 whitespace-nowrap'><%= player.projected_points %></td>
+<td class='text-sm px-6 py-1 whitespace-nowrap'><%= player.projected_value %>x</td>
+<td class='text-sm px-6 py-1 whitespace-nowrap'><%= player.projected_ownership %>%</td>
 <%= render partial: 'players/player_pool_actions',
-           locals: { entry: player_pool_entry_for(player_pool, player) } %>
+           locals: { entry: player_pool_entry_for(player_pool, player.player) } %>

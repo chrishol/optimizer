@@ -1,14 +1,13 @@
 class PlayersController < DfsToolsController
   skip_before_action :load_gameweek, :load_player_pool, :load_navigable_gameweeks, only: %w(show)
 
+  before_action :load_projection_set, only: %w(index)
+
   def index
-    @players = Player.left_joins(projections: :projection_set)
-                     .where(
-                       gameweek_id: gameweek.id,
-                       projection_sets: { source: 'Establish the Run' }
-                     )
+    @players = gameweek.players
     @players = @players.where(position: params[:position]) if filter_params_valid?
-    @players = @players.order('position ASC, projections.projection DESC')
+    @players = @players.map { |player| player.decorate(projection_set: @projection_set) }
+                       .sort_by { |player| [-player.projected_points, -player.price] }
   end
 
   def show

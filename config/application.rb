@@ -31,5 +31,7 @@ module Optimizer
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.autoload_paths << "#{config.root}/app/decorators"
   end
 end
