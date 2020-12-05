@@ -18,7 +18,7 @@
 <div class="flex flex-row flex-wrap -mx-2">
   <% player_pool.player_pool_entries.each do |entry| %>
     <div class="inline-flex space-x-0 items-center rounded-lg shadow w-48 h-6 m-1">
-      <div class="flex flex-none items-center justify-center w-1/5 h-full bg-gray-700 rounded-l-lg">
+      <div class="flex flex-none items-center justify-center w-1/5 h-full rounded-l-lg <%= entry_bg_color(entry) %>">
         <span class="text-white text-xs font-bold uppercase">
           <%= entry.player.position %>
         </span>

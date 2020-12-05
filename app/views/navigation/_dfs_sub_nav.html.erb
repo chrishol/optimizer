@@ -32,6 +32,14 @@
               Optimizer
             </span>
           <% end %>
+          <%= link_to_unless_current(
+                'Stacks',
+                gameweek_stacks_path(@gameweek),
+                class: 'px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-800 hover:bg-gray-100') do %>
+            <span class='px-3 py-2 rounded-md text-sm font-medium text-gray-900 bg-gray-200'>
+              Stacks
+            </span>
+          <% end %>
           <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-800 hover:bg-gray-100">Lineups</a>
           <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-800 hover:bg-gray-100">Swaps</a>
           <%= link_to_unless_current(

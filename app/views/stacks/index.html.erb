@@ -1,0 +1,67 @@
+<% content_for :sub_navigation do %>
+  <%= render partial: 'navigation/dfs_sub_nav' %>
+<% end %>
+
+<div class='flex flex-col min-h-screen mt-4'>
+  <div class='flex-none bg-white'>
+    <div class="py-2">
+      <h3 class="text-sm font-bold text-gray-400 my-2">
+        STACK PROJECTIONS
+      </h3>
+      <div class='h-128'>
+        <canvas id='stack-projection-bar-chart'></canvas>
+        <script>
+          var context = document.getElementById('stack-projection-bar-chart');
+          new Chart(context, {
+            type: 'bar',
+            data: <%= stack_projection_bar_data(@stack_builder.sorted_stacks_by_points) %>,
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              legend: {
+                  display: false
+              },
+              scales: {
+                xAxes: [{
+                    ticks: {
+                        display: false
+                    }
+                }]
+              }
+            }
+          });
+        </script>
+      </div>
+    </div>
+
+    <div class="py-2">
+      <h3 class="text-sm font-bold text-gray-400 my-2">
+        STACK VALUES
+      </h3>
+      <div class='h-128'>
+        <canvas id='stack-value-bar-chart'></canvas>
+        <script>
+          var context = document.getElementById('stack-value-bar-chart');
+          new Chart(context, {
+            type: 'bar',
+            data: <%= stack_value_bar_data(@stack_builder.sorted_stacks_by_value) %>,
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              legend: {
+                  display: false
+              },
+              scales: {
+                xAxes: [{
+                    ticks: {
+                        display: false
+                    }
+                }]
+              }
+            }
+          });
+        </script>
+      </div>
+    </div>
+  </div>
+</div>

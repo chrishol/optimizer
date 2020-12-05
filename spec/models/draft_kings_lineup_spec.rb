@@ -197,7 +197,7 @@ RSpec.describe DraftKingsLineup do
       let(:wr3) { build(:player, position: 'wr', team: 'was', opponent: 'ari') }
       let(:te) { build(:player, position: 'te', team: 'ten', opponent: 'atl') }
 
-      it { expect(stack_description).to eq '2x1 ++' }
+      it { expect(stack_description).to eq '2x1++' }
     end
 
     context 'when the other mini-stack are rbs' do
@@ -208,7 +208,7 @@ RSpec.describe DraftKingsLineup do
       let(:wr3) { build(:player, position: 'wr', team: 'was', opponent: 'ari') }
       let(:te) { build(:player, position: 'te', team: 'was', opponent: 'ari') }
 
-      it { expect(stack_description).to eq '3x2 ++' }
+      it { expect(stack_description).to eq '3x2++' }
     end
   end
 end

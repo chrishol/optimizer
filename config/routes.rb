@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resources :projection_charts, only: %w(index)
     resources :optimizer_tools, only: %w(index)
     resources :results_sets, only: %w(index show)
+    resources :stacks, only: %w(index)
   end
 
   resources :players, only: %w(show)
