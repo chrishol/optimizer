@@ -10,6 +10,8 @@ class ResultsSetsController < DfsToolsController
 
     @results = @results_set.player_results.joins(:player)
     @results = @results.where(players: { position: params[:position] }) if filter_params_valid?
+
+    @winning_lineups = @results_set.entered_lineups.where('slate_rank <= 10').limit(10).order('slate_rank ASC')
   end
 
   private

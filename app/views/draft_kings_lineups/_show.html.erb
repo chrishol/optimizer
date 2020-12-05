@@ -1,30 +1,49 @@
-<div class="table m-2">
-  <div class="table-row-group">
-    <% lineup.players.each do |player| %>
-      <div class="table-row">
-        <div class="table-cell bg-gray-200 text-gray-700 w-12 p-2 text-sm text-center uppercase">
+<table class='mx-2 my-2 bg-white'>
+  <tbody>
+    <thead>
+      <tr>
+        <th colspan='2' class='px-6 py-3 bg-gray-100 text-left text-xs font-medium text-gray-600 tracking-wider rounded-tl-xl'>
+          <% if lineup.respond_to?(:slate_rank) %>
+            <%= lineup.slate_rank.ordinalize %>:
+            <%= lineup.entry_name %>
+          <% else %>
+            Optized Lineup
+          <% end %>
+        </th>
+        <th class='bg-gray-100 rounded-tr-xl py-1'>
+          <% if lineup.stack_description %>
+            <span class='inline-block bg-yellow-200 px-2 py-1 text-xs text-yellow-700 rounded-full'>
+              <%= lineup.stack_description %>
+            </span>
+          <% end %>
+        </th>
+      </tr>
+    </thead>
+    <% lineup.sorted_players.each do |player| %>
+      <tr>
+        <td class='px-3 py-2 bg-gray-100 text-center text-xs font-medium text-gray-600 uppercase tracking-wider'>
           <%= player.position %>
-        </div>
-        <div class="table-cell bg-gray-100 text-gray-700 w-40 p-2 text-sm">
+        </td>
+        <td class='text-sm px-3 py-2 whitespace-nowrap'>
           <%= player.name %>
-        </div>
-        <div class="table-cell bg-gray-200 text-gray-700 w-12 p-2 text-sm text-center">
+          <span class='ml-1 text-xs text-gray-400'>
+            <span class='uppercase'><%= player.team %></span>
+
+          </span>
+        </td>
+        <td class='text-sm px-3 py-2 whitespace-nowrap text-right'>
           <%= player.price %>
-        </div>
-      </div>
+        </td>
+      </tr>
     <% end %>
-    <div class="table-row">
-      <div class="table-cell bg-gray-100 text-gray-700 w-12 p-2 text-sm text-center font-bold">
-        $
-      </div>
-      <div class="table-cell bg-gray-200 text-gray-700 w-40 p-2 text-sm align-middle">
-        <div class="flex justify-center items-center h-4 text-yellow-600 font-bold">
-          <%= stack_description(lineup) %>
-        </div>
-      </div>
-      <div class="table-cell bg-gray-400 text-gray-700 w-12 p-2 text-sm">
+    <tr>
+      <td class='bg-gray-100 rounded-bl-lg'>
+      </td>
+      <td>
+      </td>
+      <td class='text-sm px-3 py-2 whitespace-nowrap text-right'>
         <%= lineup.total_price %>
-      </div>
-    </div>
-  </div>
-</div>
+      </td>
+    </tr>
+  </tbody>
+</table>

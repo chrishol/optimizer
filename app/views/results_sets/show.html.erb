@@ -80,6 +80,17 @@
         </script>
       </div>
     </div>
+
+    <div class='py-8'>
+      <h3 class="text-sm font-bold text-gray-400 my-2">
+        WINNING LINEUPS
+      </h3>
+      <div class='flex flex-row flex-wrap justify-start'>
+        <% @winning_lineups.each do |lineup| %>
+          <%= render partial: 'draft_kings_lineups/show', locals: { lineup: lineup } %>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
 
