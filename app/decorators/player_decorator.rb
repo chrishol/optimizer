@@ -7,6 +7,14 @@ class PlayerDecorator < SimpleDelegator
 
   alias_method :player, :__getobj__
 
+  def has_projection?
+    projection.present?
+  end
+
+  def has_result?
+    player_result.present?
+  end
+
   def projected_points
     @projected_points ||= projection&.projection || 0
   end
@@ -17,6 +25,24 @@ class PlayerDecorator < SimpleDelegator
 
   def projected_value
     @projected_value ||= projection&.projected_value || 0
+  end
+
+  def actual_ownership
+    @actual_ownership ||= player_result&.ownership || 0
+  end
+
+  def actual_points
+    @actual_points ||= player_result&.points || 0
+  end
+
+  def actual_value
+    @actual_value ||= begin
+      (1000 * actual_points.to_f / price).round(2)
+    end
+  end
+
+  def ownership_differential
+    actual_ownership - projected_ownership
   end
 
   private

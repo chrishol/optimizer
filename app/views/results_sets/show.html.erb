@@ -29,7 +29,7 @@
           var context = document.getElementById('points-ownership-scatter-chart');
           new Chart(context, {
             type: 'scatter',
-            data: <%= points_by_ownership_scatter_data(@results) %>,
+            data: <%= points_by_ownership_scatter_data(@players) %>,
             options: {
               responsive: true,
               maintainAspectRatio: false,
@@ -60,7 +60,7 @@
           var context = document.getElementById('value-ownership-scatter-chart');
           new Chart(context, {
             type: 'scatter',
-            data: <%= value_by_ownership_scatter_data(@results) %>,
+            data: <%= value_by_ownership_scatter_data(@players) %>,
             options: {
               responsive: true,
               maintainAspectRatio: false,
@@ -86,13 +86,67 @@
         WINNING LINEUPS
       </h3>
       <div class='flex flex-row flex-wrap justify-start'>
-        <% @winning_lineups.each do |lineup| %>
+        <% @lineups_to_display.each do |lineup| %>
           <%= render partial: 'draft_kings_lineups/show', locals: { lineup: lineup } %>
         <% end %>
       </div>
     </div>
-  </div>
-</div>
 
-<div id='ac-player-pool' data-player-pool-id='<%= @player_pool.id %>' class='hidden'>
+    <div class="py-2">
+      <h3 class="text-sm font-bold text-gray-400 my-2">
+        OWNERSHIP DIFFERENTIAL
+      </h3>
+      <div class='h-128'>
+        <canvas id='ownership-diff-bar-chart'></canvas>
+        <script>
+          var context = document.getElementById('ownership-diff-bar-chart');
+          new Chart(context, {
+            type: 'bar',
+            data: <%= ownership_diff_bar_data(@players) %>,
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              legend: {
+                  display: false
+              },
+              scales: {
+                xAxes: [{
+                    ticks: {
+                        minRotation: 90,
+                        maxRotation: 90
+                    }
+                }]
+              }
+            }
+          });
+        </script>
+      </div>
+    </div>
+
+    <div class='shadow overflow-hidden border-b border-gray-200 sm:rounded-lg'>
+      <table class='min-w-full divide-y divide-gray-200'>
+        <thead class='bg-gray-500'>
+          <tr>
+            <th scope='col' class='px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>Position</th>
+            <th scope='col' class='px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>Player</th>
+            <th scope='col' class='px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>Game</th>
+            <th scope='col' class='px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>Price</th>
+            <th scope='col' class='px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>Proj Pts</th>
+            <th scope='col' class='px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>Proj Value</th>
+            <th scope='col' class='px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>Proj Own %</th>
+            <th scope='col' class='px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>Points</th>
+            <th scope='col' class='px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>Value</th>
+            <th scope='col' class='px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>Own %</th>
+          </tr>
+        </thead>
+        <tbody class='bg-white divide-y divide-gray-200'>
+          <% @players.sort_by(&:actual_points).reverse.each do |player| %>
+            <tr>
+              <%= render partial: 'results_sets/player_row', locals: { player: player } %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

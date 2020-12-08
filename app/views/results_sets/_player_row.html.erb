@@ -1,0 +1,19 @@
+
+<td class='text-sm px-6 py-1 whitespace-nowrap uppercase'><%= player.position %></td>
+<td class='text-sm px-6 py-1 whitespace-nowrap'><%= player.name %></td>
+<td class='text-sm px-6 py-1 whitespace-nowrap'>
+  <span class='uppercase'><%= player.team %></span>
+  <%= game_venue_symbol(player) %>
+  <span class='uppercase'><%= player.opponent %></span>
+</td>
+<td class='text-sm px-6 py-1 whitespace-nowrap'>
+  <%= link_to player_path(player) do %>
+    <%= player.price %>
+  <% end %>
+</td>
+<td class='text-sm px-6 py-1 whitespace-nowrap'><%= player.projected_points %></td>
+<td class='text-sm px-6 py-1 whitespace-nowrap'><%= player.projected_value %>x</td>
+<td class='text-sm px-6 py-1 whitespace-nowrap'><%= player.projected_ownership %>%</td>
+<td class='text-sm px-6 py-1 whitespace-nowrap'><%= player.actual_points %></td>
+<td class='text-sm px-6 py-1 whitespace-nowrap'><%= player.actual_value %>x</td>
+<td class='text-sm px-6 py-1 whitespace-nowrap'><%= player.actual_ownership %>%</td>

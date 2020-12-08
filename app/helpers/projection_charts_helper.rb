@@ -3,7 +3,7 @@ module ProjectionChartsHelper
     {
       labels: players.map(&:name),
       datasets: [{
-        data: players.map { |p| p.projections.first.projection.to_f }
+        data: players.map(&:projected_points)
       }]
     }.to_json.html_safe
   end
@@ -11,8 +11,8 @@ module ProjectionChartsHelper
   def value_by_projection_scatter_data(players)
     player_data = players.map do |player|
       {
-        x: player.projections.first.projected_value,
-        y: player.projections.first.projected_ownership
+        x: player.projected_value,
+        y: player.projected_ownership
       }
     end
     {
