@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_02_053111) do
+ActiveRecord::Schema.define(version: 2020_12_11_003502) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,6 +85,18 @@ ActiveRecord::Schema.define(version: 2020_12_02_053111) do
     t.bigint "player_id", null: false
     t.index ["entered_lineup_id"], name: "index_entered_lineups_players_on_entered_lineup_id"
     t.index ["player_id"], name: "index_entered_lineups_players_on_player_id"
+  end
+
+  create_table "game_lines", force: :cascade do |t|
+    t.bigint "scheduled_game_id", null: false
+    t.string "site_name"
+    t.decimal "home_total", precision: 5, scale: 2, null: false
+    t.decimal "road_total", precision: 5, scale: 2, null: false
+    t.decimal "game_total", precision: 5, scale: 2, null: false
+    t.decimal "home_spread", precision: 5, scale: 2, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["scheduled_game_id"], name: "index_game_lines_on_scheduled_game_id"
   end
 
   create_table "gameweeks", force: :cascade do |t|
@@ -180,6 +192,7 @@ ActiveRecord::Schema.define(version: 2020_12_02_053111) do
   add_foreign_key "entered_lineups", "results_sets"
   add_foreign_key "entered_lineups_players", "entered_lineups"
   add_foreign_key "entered_lineups_players", "players"
+  add_foreign_key "game_lines", "scheduled_games"
   add_foreign_key "player_pool_entries", "player_pools"
   add_foreign_key "player_pool_entries", "players"
   add_foreign_key "player_pools", "gameweeks"

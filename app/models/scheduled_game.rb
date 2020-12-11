@@ -5,6 +5,7 @@ class ScheduledGame < ApplicationRecord
   )
 
   belongs_to :gameweek
+  has_many :game_lines
 
   validates_presence_of :start_time, :home_team, :road_team
   validates_inclusion_of :home_team, :road_team, in: NFL_TEAMS
