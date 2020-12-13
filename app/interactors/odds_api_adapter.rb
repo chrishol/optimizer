@@ -56,8 +56,8 @@ class OddsApiAdapter
         home_spread = site_data['odds']['spreads']['points'].first.to_f
         line_info.merge!(
           home_spread: home_spread,
-          home_total: (line_info[:game_total] + home_spread)/2,
-          road_total: (line_info[:game_total] - home_spread)/2
+          home_total: (line_info[:game_total] - home_spread)/2,
+          road_total: (line_info[:game_total] + home_spread)/2
         )
       end
     end

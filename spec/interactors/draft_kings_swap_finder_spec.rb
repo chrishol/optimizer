@@ -19,7 +19,7 @@ describe DraftKingsSwapFinder do
       let(:swap_size) { 1 }
 
       it 'raises an error' do
-        expect { swaps }.to raise_error
+        expect { swaps }.to raise_error 'Swap size needs to be 2 or more'
       end
     end
 
