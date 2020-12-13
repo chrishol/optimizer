@@ -10,6 +10,7 @@ require("channels")
 require("jquery")
 
 require("chart.js")
+require("local-time").start()
 
 import '../src/navigation.js';
 

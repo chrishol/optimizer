@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   resources :gameweeks, only: %w(index) do
     resources :players, only: %w(index)
+    resources :games, only: %w(index)
     resources :projection_charts, only: %w(index)
     resources :optimizer_tools, only: %w(index)
     resources :results_sets, only: %w(index show)

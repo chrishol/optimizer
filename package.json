@@ -9,6 +9,7 @@
     "autoprefixer": "^10.0.2",
     "chart.js": "^2.9.4",
     "jquery": "^3.5.1",
+    "local-time": "^2.1.0",
     "postcss": "^8.1.10",
     "tailwindcss": "^2.0.1",
     "turbolinks": "^5.2.0"
