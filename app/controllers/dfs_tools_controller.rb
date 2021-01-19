@@ -19,7 +19,7 @@ class DfsToolsController < ApplicationController
     @projection_set = gameweek.projection_sets
                               .includes(:projections)
                               .where(projection_sets: { source: 'Establish the Run' })
-                              .first
+                              .last
   end
 
   def load_navigable_gameweeks

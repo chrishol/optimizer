@@ -2,7 +2,7 @@ require 'csv'
 
 # Example usage
 # ----------------
-# path = './tmp/contest_results.csv'
+# path = './tmp/contest_standings.csv'
 # gameweek = Gameweek.find_by(season: 2020, week_number: 12)
 # ResultsSetImporter.new(gameweek, 'DraftKings $50 Red Zone', 'gpp').import_csv(path)
 
@@ -15,7 +15,7 @@ class ResultsSetImporter
 
   def import_csv(csv_path)
     CSV.table(csv_path).each do |row|
-      player_name = row[:player]
+      player_name = row[:player]&.strip
 
       if player_name.present? && (player = Player.find_by(gameweek: gameweek, name: player_name))
         player_result = PlayerResult.where(results_set: results_set).find_or_create_by!(player: player)

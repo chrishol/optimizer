@@ -1,7 +1,8 @@
 class ResultsSetsController < DfsToolsController
   USERNAMES_OF_INTEREST = %w(
     clhol TheHumanCespedes CSURAM88 AdamLevitan Dinkpiece EmpireMaker2 Makisupa Daut44
-    DavisMattek changsveeshuskies leonem revertzeetop uncbluehen Awesemo
+    DavisMattek changsveeshuskies leonem revertzeetop uncbluehen Awesemo ChipotleAddict
+    papagates elz24 SamENole
   )
   before_action :load_results_sets
 
@@ -24,10 +25,10 @@ class ResultsSetsController < DfsToolsController
                end
     @players = @players.select(&:has_result?)
 
-    @lineups_to_display = @results_set.entered_lineups.where('slate_rank <= 10').limit(10).order('slate_rank ASC').to_a
+    @lineups_to_display = @results_set.entered_lineups.includes(:players).where('slate_rank <= 10').limit(10).order('slate_rank ASC').to_a
     @lineups_to_display = @lineups_to_display.concat(
-      @results_set.entered_lineups.where(entry_name: USERNAMES_OF_INTEREST).order('slate_rank ASC').to_a
-    )
+      @results_set.entered_lineups.includes(:players).where(entry_name: USERNAMES_OF_INTEREST).order('slate_rank ASC').to_a
+    ).uniq
   end
 
   private

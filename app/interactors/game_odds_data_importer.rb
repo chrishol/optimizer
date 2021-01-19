@@ -1,8 +1,12 @@
 class GameOddsDataImporter
   GAME_TIME_TOLERANCE = 60 * 60 * 96
 
+  def initialize(line_data = nil)
+    @line_data = line_data || OddsApiAdapter.new.get_totals_and_spreads
+  end
+
   def import
-    OddsApiAdapter.new.get_totals_and_spreads.each do |game_data|
+    @line_data.each do |game_data|
       scheduled_game = ScheduledGame.where(start_time: start_time_tolerance_range(game_data[:start_time]))
                           .where(
                             home_team: team_lookup_hash[game_data[:home_team]],
