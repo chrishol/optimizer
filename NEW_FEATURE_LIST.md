@@ -6,10 +6,13 @@
 
 ### DFS
 
-- Show winning lineups and those of specific fantasy pros
-
+- Display and conditional formatting of team rankings
 - Add header to display which results are being shown
 - Figure out what to do with "lineup finder" and "swap finder" features
+- Introduce concept of a "slate" with a type (e.g. Showdown)
+- Separate actual points results from ownership
+- Import past player prices
+- Import past performance from pro football reference?
 
 ### Survivor
 
