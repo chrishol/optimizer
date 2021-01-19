@@ -17,6 +17,14 @@
             </span>
           <% end %>
           <%= link_to_unless_current(
+                'Games',
+                gameweek_games_path(@gameweek),
+                class: 'px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-800 hover:bg-gray-100') do %>
+            <span class='px-3 py-2 rounded-md text-sm font-medium text-gray-900 bg-gray-200'>
+              Games
+            </span>
+          <% end %>
+          <%= link_to_unless_current(
                 'Charts',
                 gameweek_projection_charts_path(@gameweek),
                 class: 'px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-800 hover:bg-gray-100') do %>

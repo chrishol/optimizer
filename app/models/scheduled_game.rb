@@ -9,4 +9,8 @@ class ScheduledGame < ApplicationRecord
 
   validates_presence_of :start_time, :home_team, :road_team
   validates_inclusion_of :home_team, :road_team, in: NFL_TEAMS
+
+  def decorate(team_rankings: nil)
+    ScheduledGameDecorator.new(self, team_rankings: team_rankings)
+  end
 end

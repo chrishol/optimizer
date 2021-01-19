@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_11_003502) do
+ActiveRecord::Schema.define(version: 2020_12_28_012440) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -189,6 +189,22 @@ ActiveRecord::Schema.define(version: 2020_12_11_003502) do
     t.index ["gameweek_id"], name: "index_scheduled_games_on_gameweek_id"
   end
 
+  create_table "team_rankings", force: :cascade do |t|
+    t.bigint "gameweek_id", null: false
+    t.string "team_name"
+    t.integer "off_dvoa_rank"
+    t.integer "off_pass_dvoa_rank"
+    t.integer "off_rush_dvoa_rank"
+    t.integer "def_dvoa_rank"
+    t.integer "def_pass_dvoa_rank"
+    t.integer "def_rush_dvoa_rank"
+    t.integer "etr_ol_rank"
+    t.integer "etr_dl_rank"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["gameweek_id"], name: "index_team_rankings_on_gameweek_id"
+  end
+
   add_foreign_key "entered_lineups", "results_sets"
   add_foreign_key "entered_lineups_players", "entered_lineups"
   add_foreign_key "entered_lineups_players", "players"
@@ -204,4 +220,5 @@ ActiveRecord::Schema.define(version: 2020_12_11_003502) do
   add_foreign_key "projections", "projection_sets"
   add_foreign_key "results_sets", "gameweeks"
   add_foreign_key "scheduled_games", "gameweeks"
+  add_foreign_key "team_rankings", "gameweeks"
 end
