@@ -8,4 +8,7 @@ environment.plugins.prepend('Provide',
   })
 )
 
+const datatables = require('./loaders/datatables')
+environment.loaders.append('datatables', datatables)
+
 module.exports = environment
