@@ -5,14 +5,12 @@ class DraftKingsLineupOptimizer
 
   attr_accessor :is_solved
 
-  def initialize(players,
-                 projection_set,
+  def initialize(decorated_players,
                  min_price: DEFAULT_MIN_PRICE,
                  excluded_lineups: [],
                  locked_player_ids: [],
                  excluded_player_ids: [])
-    @players = players
-    @projection_set = projection_set
+    @decorated_players = decorated_players
     @min_price = min_price
     @excluded_lineups = excluded_lineups
     @locked_player_ids = locked_player_ids
@@ -21,8 +19,7 @@ class DraftKingsLineupOptimizer
 
   def reoptimize(excluded_lineups: [])
     self.class.new(
-      @players,
-      @projection_set,
+      @decorated_players,
       min_price: @min_price,
       excluded_lineups: excluded_lineups,
       locked_player_ids: @locked_player_ids,
@@ -33,7 +30,7 @@ class DraftKingsLineupOptimizer
   def optimal_lineup
     solve
     DraftKingsLineup.new(
-      players.select do |player|
+      decorated_players.select do |player|
         problem.value_of(model_variables[player]) > 0
       end
     )
@@ -51,7 +48,7 @@ class DraftKingsLineupOptimizer
 
   private
 
-  attr_reader :problem, :players, :projection_set, :min_price, :excluded_lineups,
+  attr_reader :problem, :decorated_players, :min_price, :excluded_lineups,
               :locked_player_ids, :excluded_player_ids
 
   def solve
@@ -80,7 +77,7 @@ class DraftKingsLineupOptimizer
     return @model_variables if defined?(@model_variables)
 
     @model_variables = {}
-    players.each do |player|
+    decorated_players.each do |player|
       @model_variables[player] = model.bin_var(name: player.id)
     end
     @model_variables
@@ -126,7 +123,7 @@ class DraftKingsLineupOptimizer
     locked_player_ids.each do |player_id|
       model.enforce(
         model_variables.fetch(
-          players.find { |player, var| player.id == player_id }
+          decorated_players.find { |player, var| player.id == player_id }
         ) == 1
       )
     end
@@ -136,7 +133,7 @@ class DraftKingsLineupOptimizer
     excluded_player_ids.each do |player_id|
       model.enforce(
         model_variables.fetch(
-          players.find { |player, var| player.id == player_id }
+          decorated_players.find { |player, var| player.id == player_id }
         ) == 0
       )
     end
@@ -153,7 +150,7 @@ class DraftKingsLineupOptimizer
   def maximize_projection
     model.maximize(
       model_variables.sum do |player, var|
-        var * (100 * (projection_set.projections.find { |proj| proj.player_id == player.id }&.projection.to_f)).to_i
+        var * (100 * player.points.to_f).to_i
       end
     )
   end

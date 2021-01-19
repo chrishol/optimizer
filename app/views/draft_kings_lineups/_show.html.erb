@@ -7,9 +7,10 @@
             <%= lineup.slate_rank.ordinalize %>:
             <%= lineup.entry_name %>
           <% else %>
-            Optized Lineup
+            Optimized Lineup
           <% end %>
         </th>
+        <th colspan='2' class='bg-gray-100 py-1'></th>
         <th class='bg-gray-100 rounded-tr-xl py-1'>
           <% if lineup.stack_description %>
             <span class='inline-block bg-yellow-200 px-2 py-1 text-xs text-yellow-700 rounded-full'>
@@ -31,18 +32,30 @@
 
           </span>
         </td>
-        <td class='text-sm px-3 py-2 whitespace-nowrap text-right'>
+        <td class='text-sm px-3 py-2 whitespace-nowrap text-right font-mono'>
           <%= player.price %>
+        </td>
+        <td class='text-sm px-3 py-2 whitespace-nowrap text-right font-mono bg-gray-100'>
+          <%= player.points %>
+        </td>
+        <td class='text-sm px-3 py-2 whitespace-nowrap text-right font-mono'>
+          <%= player.ownership %>%
         </td>
       </tr>
     <% end %>
     <tr>
-      <td class='bg-gray-100 rounded-bl-lg'>
+      <td class='bg-gray-100 rounded-bl-lg border-b border-gray-100'>
       </td>
-      <td>
+      <td class='border-b border-gray-100'>
       </td>
-      <td class='text-sm px-3 py-2 whitespace-nowrap text-right'>
+      <td class='text-sm px-3 py-2 whitespace-nowrap text-right font-mono border-b border-gray-100'>
         <%= lineup.total_price %>
+      </td>
+      <td class='text-sm px-3 py-2 whitespace-nowrap text-right font-mono bg-gray-100 font-bold border-b border-gray-100'>
+        <%= lineup.total_points %>
+      </td>
+      <td class='text-sm px-3 py-2 whitespace-nowrap text-right font-mono border-b border-gray-100'>
+        <%= lineup.total_ownership %>
       </td>
     </tr>
   </tbody>

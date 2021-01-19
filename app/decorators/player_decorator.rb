@@ -15,6 +15,18 @@ class PlayerDecorator < SimpleDelegator
     player_result.present?
   end
 
+  def points
+    has_result? ? actual_points : projected_points
+  end
+
+  def ownership
+    has_result? ? actual_ownership : projected_ownership
+  end
+
+  def value
+    has_result? ? actual_value : projected_value
+  end
+
   def projected_points
     @projected_points ||= projection&.projection || 0
   end

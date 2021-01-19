@@ -12,6 +12,14 @@ module DraftKingsLineupMethods
     players.sum(&:price)
   end
 
+  def total_points
+    players.sum(&:points)
+  end
+
+  def total_ownership
+    players.sum(&:ownership)
+  end
+
   def stack_description
     qb_team = players.find { |p| p.position == 'qb' }.team
     qb_stack = players.count { |p| %w(wr te).include?(p.position) && p.team == qb_team }

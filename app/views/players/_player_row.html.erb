@@ -6,14 +6,14 @@
   <%= game_venue_symbol(player) %>
   <span class='uppercase'><%= player.opponent %></span>
 </td>
-<td class='text-sm px-6 py-1 whitespace-nowrap'>
+<td class='text-sm px-6 py-1 whitespace-nowrap text-right font-mono'>
   <%= link_to player_path(player) do %>
     <%= player.price %>
   <% end %>
-  <%= price_change(player) %>
 </td>
-<td class='text-sm px-6 py-1 whitespace-nowrap'><%= player.projected_points %></td>
-<td class='text-sm px-6 py-1 whitespace-nowrap'><%= player.projected_value %>x</td>
-<td class='text-sm px-6 py-1 whitespace-nowrap'><%= player.projected_ownership %>%</td>
+<td class='text-sm px-6 py-1 whitespace-nowrap text-right font-mono'><%= price_change(player) %></td>
+<td class='text-sm px-6 py-1 whitespace-nowrap text-right font-mono'><%= player.projected_points %></td>
+<td class='text-sm px-6 py-1 whitespace-nowrap text-right font-mono'><%= player.projected_value %>x</td>
+<td class='text-sm px-6 py-1 whitespace-nowrap text-right font-mono'><%= player.projected_ownership %>%</td>
 <%= render partial: 'players/player_pool_actions',
            locals: { entry: player_pool_entry_for(player_pool, player.player) } %>
