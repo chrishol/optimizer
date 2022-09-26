@@ -24,7 +24,8 @@ class ProjectionSetImporter
       projection.update(
         projection: row[:dk_projection],
         projected_value: row[:dk_value],
-        projected_ownership: row[:dk_ownership]
+        projected_ownership: row[:dk_ownership],
+        projected_ceiling: row[:dk_ceiling]
       )
     end
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_28_012440) do
+ActiveRecord::Schema.define(version: 2021_09_09_001808) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -166,6 +166,7 @@ ActiveRecord::Schema.define(version: 2020_12_28_012440) do
     t.decimal "projected_ownership", precision: 5, scale: 2, default: "0.0"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.decimal "projected_ceiling", precision: 5, scale: 2, default: "0.0"
     t.index ["player_id"], name: "index_projections_on_player_id"
     t.index ["projection_set_id"], name: "index_projections_on_projection_set_id"
   end
@@ -202,6 +203,8 @@ ActiveRecord::Schema.define(version: 2020_12_28_012440) do
     t.integer "etr_dl_rank"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "elo_rating"
+    t.integer "elo_rank"
     t.index ["gameweek_id"], name: "index_team_rankings_on_gameweek_id"
   end
 

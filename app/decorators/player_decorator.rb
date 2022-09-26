@@ -1,11 +1,16 @@
 class PlayerDecorator < SimpleDelegator
-  def initialize(player, projection_set: nil, results_set: nil)
+  def initialize(player, projection_set: nil, results_set: nil, options: {})
     super(player)
     @projection_set = projection_set
     @results_set = results_set
+    @options = options
   end
 
   alias_method :player, :__getobj__
+
+  def use_ceiling?
+    !!options[:use_ceiling]
+  end
 
   def has_projection?
     projection.present?
@@ -28,7 +33,7 @@ class PlayerDecorator < SimpleDelegator
   end
 
   def projected_points
-    @projected_points ||= projection&.projection || 0
+    @projected_points ||= (use_ceiling? ? projection&.projected_ceiling : projection&.projection) || 0
   end
 
   def projected_ownership
@@ -59,7 +64,7 @@ class PlayerDecorator < SimpleDelegator
 
   private
 
-  attr_reader :projection_set, :results_set
+  attr_reader :projection_set, :results_set, :options
 
   def projection
     @projection ||= begin

@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   root to: "marketing_pages#index"
 
+  resources :uploads, only: %w(new create)
+
   resources :gameweeks, only: %w(index) do
     resources :players, only: %w(index)
     resources :games, only: %w(index)

@@ -1,10 +1,10 @@
 require 'csv'
 
 # Example usage (data from Pro Football Reference)
+# https://www.pro-football-reference.com/years/2020/games.htm
 # ---------------------------------------------------
 # path = './tmp/schedule.csv'
-# importer = ScheduleDataImporter.new(2020)
-# importer.import_csv(path)
+# ScheduleDataImporter.new(2020).import_csv(path)
 
 class ScheduleDataImporter
   NFL_TEAM_LOOKUP = {

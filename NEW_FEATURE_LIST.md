@@ -3,10 +3,12 @@
 ### General
 
 - Authentication
+- Add CSV upload screen to streamline data imports
 
 ### DFS
 
-- Display and conditional formatting of team rankings
+- Add actual results to games and import from Pro Football Reference
+- Make team rankings 'team_name' an enum
 - Add header to display which results are being shown
 - Figure out what to do with "lineup finder" and "swap finder" features
 - Introduce concept of a "slate" with a type (e.g. Showdown)

@@ -86,7 +86,13 @@ class DraftKingsLineupOptimizer
   def add_price_constraints
     model.enforce(
       model_variables.sum do |player, var|
-        var * player.price
+        var * player.price.to_i
+      end >= min_price
+    )
+
+    model.enforce(
+      model_variables.sum do |player, var|
+        var * player.price.to_i
       end <= DraftKingsLineup::SALARY_CAP
     )
   end

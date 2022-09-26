@@ -14,20 +14,23 @@ class GameweekDataImporter
   def import_csv(csv_path)
     CSV.table(csv_path).each do |row|
       team = row[:teamabbrev].downcase
+      next if team == 'fa' # Skip free agents
+
       player_name = row[:name]&.strip
       position = row[:position].downcase
       price = row[:salary]
 
-      Player.where(gameweek: gameweek).find_or_create_by!(dk_id: row[:id]) do |player|
-        player.gameweek = gameweek
-        player.name = player_name
-        player.price = price
-        player.team = team
-        player.opponent = opponent_finder.opponent(team) || team
-        player.game_venue = opponent_finder.game_venue(team) || :neutral
-        player.position = position
-        player.previous_price = previous_entry_finder.previous_price(player_name, position)
-      end
+      player = Player.where(gameweek: gameweek).find_or_initialize_by(dk_id: row[:id])
+      player.assign_attributes(
+        name: player_name,
+        price: price,
+        team: team,
+        opponent: opponent_finder.opponent(team) || team,
+        game_venue: opponent_finder.game_venue(team) || :neutral,
+        position: position,
+        previous_price: previous_entry_finder.previous_price(player_name, position)
+      )
+      player.save!
     end
   end
 

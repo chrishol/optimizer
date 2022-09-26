@@ -14,11 +14,12 @@ class Player < ApplicationRecord
   validates_inclusion_of :position, in: PLAYER_POSITIONS
   validates_inclusion_of :game_venue, in: GAME_VENUES
 
-  def decorate(projection_set: nil, results_set: nil)
+  def decorate(projection_set: nil, results_set: nil, options: {})
     PlayerDecorator.new(
       self,
       projection_set: projection_set,
-      results_set: results_set
+      results_set: results_set,
+      options: options
     )
   end
 
